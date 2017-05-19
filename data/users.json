@@ -1,0 +1,18 @@
+[
+  {
+    "FullName" : "Test User",
+    "Enabled" : true,
+    "UserName" : "user@example.org",
+    "Id" : 123456789,
+    "Role" : 4,
+    "BoardId" : 100000000
+  },
+  {
+    "FullName" : "Test User",
+    "Enabled" : true,
+    "UserName" : "user@example.org",
+    "Id" : 123456789,
+    "Role" : 2,
+    "BoardId" : 200000000
+  }
+]
