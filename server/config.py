@@ -4,4 +4,5 @@ import os
 ENV = os.getenv('FLASK_ENV', 'development')
 DEBUG = ENV == 'development'
 TESTING = ENV == 'testing'
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost/bitelio')
+MONGODB = os.getenv('MONGODB_URI', 'localhost')
+DATABASE = os.getenv('KANBAN_DB', 'kanban')
