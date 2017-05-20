@@ -1,1 +1,32 @@
-{}
+[{
+	"ArchiveTopLevelLaneId": 100000100,
+	"TopLevelLaneIds": [
+		100000010,
+		100000011
+	],
+	"Id": 100000000,
+	"Title": "RRD API test",
+	"Version": 16,
+	"AvailableTags": [
+		"Tag1",
+		"Tag2"
+	],
+	"BacklogTopLevelLaneId": 100000001
+},
+{
+	"ArchiveTopLevelLaneId": 200000100,
+	"TopLevelLaneIds": [
+		200000010,
+		200000011,
+		200000014
+	],
+	"Id": 200000000,
+	"Title": "RRD API test 2",
+	"Version": 24,
+	"AvailableTags": [
+		"Cancelled Project",
+		"Archived"
+	],
+	"BacklogTopLevelLaneId": 200000001
+}]
+

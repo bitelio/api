@@ -1,1 +1,57 @@
-{}
+[{
+	"Id": 100002000,
+	"Title": "Date Dependent",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 100000000
+},
+{
+	"Id": 100002001,
+	"Title": "Expedite",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 100000000
+},
+{
+	"Id": 100002002,
+	"Title": "Regulatory",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 100000000
+},
+{
+	"Id": 100002003,
+	"Title": "Standard",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 100000000
+},
+{
+	"Id": 200002000,
+	"Title": "Date Dependent",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 200000000
+},
+{
+	"Id": 200002001,
+	"Title": "Expedite",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 200000000
+},
+{
+	"Id": 200002002,
+	"Title": "Regulatory",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 200000000
+},
+{
+	"Id": 200002003,
+	"Title": "Standard",
+	"ColorHex": "#FFFFFF",
+	"UseColor": false,
+	"BoardId": 200000000
+}]
+
