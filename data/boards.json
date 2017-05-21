@@ -5,7 +5,7 @@
 		100000011
 	],
 	"Id": 100000000,
-	"Title": "RRD API test",
+	"Title": "Test Board 1",
 	"Version": 16,
 	"AvailableTags": [
 		"Tag1",
@@ -21,7 +21,7 @@
 		200000014
 	],
 	"Id": 200000000,
-	"Title": "RRD API test 2",
+	"Title": "Test Board 2",
 	"Version": 24,
 	"AvailableTags": [
 		"Cancelled Project",
