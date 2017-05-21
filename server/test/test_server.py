@@ -19,8 +19,16 @@ class ServerTest(unittest.TestCase):
         response = self.app.get('/board/100000000')
         self.assertEqual(200, response.status_code)
 
-    def test_get_board_not_found(self):
+    def test_board_not_found(self):
         response = self.app.get('/board/300000000')
+        self.assertEqual(404, response.status_code)
+
+    def test_get_lanes(self):
+        response = self.app.get('/board/100000000/lanes')
+        self.assertEqual(200, response.status_code)
+
+    def test_lanes_not_found(self):
+        response = self.app.get('/board/300000000/lanes')
         self.assertEqual(404, response.status_code)
 
 

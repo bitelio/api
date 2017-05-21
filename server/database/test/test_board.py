@@ -9,6 +9,6 @@ class Board(TestCase):
         self.assertIn('CardTypes', data)
         self.assertIn('ClassesOfService', data)
 
-    def test_user_not_found(self):
+    def test_board_not_found(self):
         data = board.get(300000000)
         self.assertIsNone(data)
