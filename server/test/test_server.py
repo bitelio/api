@@ -15,5 +15,14 @@ class ServerTest(unittest.TestCase):
         response = self.app.get('/user/bogus@example.org')
         self.assertEqual(404, response.status_code)
 
+    def test_get_board(self):
+        response = self.app.get('/board/100000000')
+        self.assertEqual(200, response.status_code)
+
+    def test_get_board_not_found(self):
+        response = self.app.get('/board/300000000')
+        self.assertEqual(404, response.status_code)
+
+
 if __name__ == '__main__':
     unittest.main()
