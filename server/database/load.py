@@ -23,18 +23,21 @@ def classes_of_service(board_id):
 
 
 def user(user):
-    if isinstance(user, str):
-        matches = list(db.users.find({'UserName': user}))
-    elif isinstance(user, int):
-        matches = list(db.users.find({'Id': user}))
-    else:
-        raise ValueError("Expected str or int; got {}".format(type(user)))
+    roles = {1: 'reader', 2: 'user', 3: '-', 4: 'administrator'}
+    field = 'Id' if isinstance(user, int) else 'UserName'
+    pipeline = [{'$match': {field: user}},
+                {'$lookup': {'from': 'boards', 'localField': 'BoardId',
+                             'foreignField': 'Id', 'as': 'Board'}}]
+    matches = list(db.users.aggregate(pipeline))
 
     if matches:
-        keys = ['BoardId', 'Role', 'Enabled']
         user = {key: matches[0][key] for key in ['Id', 'FullName', 'UserName']}
-        boards = [{key: match[key] for key in keys} for match in matches]
-        user['Boards'] = boards
+        user['Boards'] = []
+        for match in matches:
+            user['Boards'].append({'BoardId': match['BoardId'],
+                                   'BoardTitle': match['Board'][0]['Title'],
+                                   'Enabled': match['Enabled'],
+                                   'Role': roles[match['Role']]})
         return user
     else:
         return None
