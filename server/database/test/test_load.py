@@ -19,7 +19,21 @@ class Load(TestCase):
 
     def test_lanes_not_found(self):
         data = load.lanes(300000000)
-        self.assertIsNone(data)
+        self.assertEqual([], data)
+
+    def test_get_cards(self):
+        data = load.cards(100000000)
+        self.assertEqual(3, len(data))
+        self.assertIn('History', data[0])
+
+    def test_get_cards_without_history(self):
+        data = load.cards(100000000, history=False)
+        self.assertEqual(3, len(data))
+        self.assertNotIn('History', data[0])
+
+    def test_get_cards_not_found(self):
+        data = load.cards(300000000)
+        self.assertEqual([], data)
 
     def test_get_user_by_email(self):
         data = load.user('user@example.org')

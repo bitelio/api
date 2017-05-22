@@ -4,22 +4,30 @@ from .connector import db
 def board(board_id):
     board = db.boards.find_one({'Id': board_id}, {'_id': 0})
     if board:
-        board['CardTypes'] = card_types(board_id)
-        board['ClassesOfService'] = classes_of_service(board_id)
-        board['Settings'] = settings(board_id)
+        board['CardTypes'] = _get_all_('card_types', board_id)
+        board['ClassesOfService'] = _get_all_('classes_of_service', board_id)
+        board['Settings'] = _get_one_('settings', board_id)
     return board
 
 
 def lanes(board_id):
-    return list(db.lanes.find({'BoardId': board_id}, {'_id': 0})) or None
+    return _get_all_('lanes', board_id)
 
 
-def card_types(board_id):
-    return list(db.card_types.find({'BoardId': board_id}, {'_id': 0}))
+def cards(board_id, history=True):
+    cards = {card['Id']: card for card in _get_all_('cards', board_id)}
+    if history:
+        for event in events(board_id):
+            card = cards[event['CardId']]
+            if 'History' in card:
+                card['History'].append(event)
+            else:
+                card['History'] = [event]
+    return list(cards.values())
 
 
-def classes_of_service(board_id):
-    return list(db.classes_of_service.find({'BoardId': board_id}, {'_id': 0}))
+def events(board_id):
+    return db.events.find({'BoardId': board_id}, {'_id': 0}).sort('Position')
 
 
 def user(user):
@@ -39,9 +47,11 @@ def user(user):
                                    'Enabled': match['Enabled'],
                                    'Role': roles[match['Role']]})
         return user
-    else:
-        return None
 
 
-def settings(board_id):
-    return db.settings.find_one({'BoardId': board_id}, {'_id': 0})
+def _get_all_(collection, board_id):
+    return list(db[collection].find({'BoardId': board_id}, {'_id': 0}))
+
+
+def _get_one_(collection, board_id):
+    return db[collection].find_one({'BoardId': board_id}, {'_id': 0})
