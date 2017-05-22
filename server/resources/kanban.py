@@ -1,18 +1,18 @@
 from flask_restful import Resource, abort
 
-from ..database import user, board, lanes
+from ..database import load
 
 
 class User(Resource):
     def get(self, username):
-        return user.get(username) or abort(404)
+        return load.user(username) or abort(404)
 
 
 class Board(Resource):
     def get(self, board_id):
-        return board.get(board_id) or abort(404)
+        return load.board(board_id) or abort(404)
 
 
 class Lanes(Resource):
     def get(self, board_id):
-        return lanes.get(board_id) or abort(404)
+        return load.lanes(board_id) or abort(404)
