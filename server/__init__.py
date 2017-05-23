@@ -5,6 +5,11 @@ from . import config
 from .resources import kanban
 
 
+def run():
+    global app
+    app.run()
+
+
 app = flask.Flask(__name__)
 app.config.from_object(config)
 api = Api(app, catch_all_404s=True)
