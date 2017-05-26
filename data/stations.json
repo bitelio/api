@@ -1,0 +1,18 @@
+[{
+  "Id": 1,
+  "Title": "Station 1",
+  "Lanes": [200000012],
+  "BoardId": 200000000
+},
+{
+  "Id": 2,
+  "Title": "Station 2",
+  "Lanes": [200000013],
+  "BoardId": 200000000
+},
+{
+  "Id": 3,
+  "Title": "Station 3",
+  "Lanes": [200000017, 200000018],
+  "BoardId": 200000000
+}]
