@@ -10,6 +10,10 @@ def board(board_id):
     return board
 
 
+def stations(board_id):
+    return _get_all_('stations', board_id)
+
+
 def lanes(board_id):
     return _get_all_('lanes', board_id)
 
