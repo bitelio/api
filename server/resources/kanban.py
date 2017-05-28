@@ -1,7 +1,8 @@
-from flask_restful import Resource, abort
+from flask_restful import Resource, abort, reqparse
 
 from .. import config
 from ..database import load
+from ..analytics import stations
 
 
 class User(Resource):
@@ -22,3 +23,22 @@ class Board(Resource):
             if collection in self.items + config.COLLECTIONS:
                 return load._get_all_(collection, board_id)
         return abort(404)
+
+
+class Stats(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('TypeId', action='append')
+    parser.add_argument('Priority', action='append')
+
+    def adapt(self, args):
+        for key in args:
+            args[key] = [int(i) for i in args[key]]
+        return args
+
+    def get(self, board_id):
+        args = self.parser.parse_args()
+        if args['TypeId'] or args['Priority']:
+            args = self.adapt(args)
+        else:
+            args = {}
+        return stations.averages(board_id, args)
