@@ -3,11 +3,11 @@
 install:
 	if [ ! -d env ]; then virtualenv env; fi
 	env/bin/pip install -r requirements.txt
-	env/bin/pip install nose rednose
 	env/bin/python setup.py develop
 
 test:
-	env/bin/nosetests --rednose
+	env/bin/pip install nose rednose coverage
+	env/bin/nosetests --rednose --with-coverage --cover-xml --cover-package server
 
 clean:
 	find . -name '*.pyc' -exec rm -f {} +

@@ -5,7 +5,7 @@ from . import config
 from .resources import kanban
 
 
-def run():
+def run():  # pragma: no cover
     global app
     app.run()
 
