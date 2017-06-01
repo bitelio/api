@@ -5,7 +5,8 @@ from .. import database
 
 
 class User(Resource):
-    def get(self, username):
+    @staticmethod
+    def get(username):
         return database.load.user(username) or abort(404)
 
 
