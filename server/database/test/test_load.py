@@ -46,3 +46,6 @@ class Load(TestCase):
     def test_user_not_found(self):
         data = load.user('bogus@example.org')
         self.assertIsNone(data)
+
+    def test_load_comments(self):
+        self.assertIsNotNone(load.comments(110000000))

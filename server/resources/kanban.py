@@ -21,9 +21,9 @@ class Board(Resource):
         elif len(attrs) == 2:
             collection = attrs[1]
             if collection in self.items:
-                return database.load._get_all_(collection, board_id)
+                return database.load.collection(collection, board_id)
             elif collection in config.COLLECTIONS:
-                data = database.load._get_all_(collection, board_id)
-                if data or database.check.board(board_id):
+                data = database.load.collection(collection, board_id)
+                if data or database.check.exists('boards', board_id):
                     return data
         return abort(404)

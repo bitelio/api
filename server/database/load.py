@@ -1,21 +1,29 @@
 from .connector import db
 
 
+def collection(collection, board_id):
+    return list(db[collection].find({'BoardId': board_id}, {'_id': 0}))
+
+
+def document(collection, board_id):
+    return db[collection].find_one({'BoardId': board_id}, {'_id': 0})
+
+
 def board(board_id):
     board = db.boards.find_one({'Id': board_id}, {'_id': 0})
     if board:
-        board['CardTypes'] = _get_all_('card_types', board_id)
-        board['ClassesOfService'] = _get_all_('classes_of_service', board_id)
-        board['Settings'] = _get_one_('settings', board_id)
+        board['CardTypes'] = collection('card_types', board_id)
+        board['ClassesOfService'] = collection('classes_of_service', board_id)
+        board['Settings'] = document('settings', board_id)
     return board
 
 
 def lanes(board_id):
-    return _get_all_('lanes', board_id)
+    return collection('lanes', board_id)
 
 
 def cards(board_id, history=True):
-    cards = {card['Id']: card for card in _get_all_('cards', board_id)}
+    cards = {card['Id']: card for card in collection('cards', board_id)}
     if history:
         for event in events(board_id):
             card = cards[event['CardId']]
@@ -49,9 +57,8 @@ def user(user):
         return user
 
 
-def _get_all_(collection, board_id):
-    return list(db[collection].find({'BoardId': board_id}, {'_id': 0}))
-
-
-def _get_one_(collection, board_id):
-    return db[collection].find_one({'BoardId': board_id}, {'_id': 0})
+def comments(card_id=None):
+    query = {'Type': 'CommentPostEventDTO'}
+    if card_id:
+        query.update({'CardId': card_id})
+    return list(db.events.find(query).sort('Position'))

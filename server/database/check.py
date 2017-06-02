@@ -1,5 +1,5 @@
 from .connector import db
 
 
-def board(board_id):
-    return db.boards.find_one({'Id': board_id}) != None
+def exists(collection, value, key='Id'):
+    return db[collection].find_one({key: value}) != None
