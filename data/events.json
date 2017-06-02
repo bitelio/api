@@ -80,7 +80,7 @@
 },
 {
 	"ToLaneTitle": null,
-	"CommentText": "\u003cp\u003eComment 1\u003c/p\u003e",
+	"CommentText": "<p>Comment 1<p>",
 	"ToLaneId": 0,
 	"TaskboardContainingCardId": null,
 	"UserName": "user@example.org",
