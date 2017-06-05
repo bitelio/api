@@ -1,3 +1,4 @@
+from dateutil.parser import parse
 
 from .. import kanban
 
@@ -40,6 +41,10 @@ def averages(board_id, args):
         cards = selected(board.cards.values(), args)
     else:
         cards = list(board.cards.values())
+    print(args.get('FromDate'), args.get('ToDate'))
+    from_date = parse(args['FromDate']) if args['FromDate'] else None
+    to_date = parse(args['ToDate']) if args['ToDate'] else None
+    print(from_date, to_date)
     stations = {}
     columns = ['position', 'name', 'cards in', 'cards out', 'cards wip', 'sheets in', 'sheets out',
                'sheets wip', 'avg trt card', 'avg trt sheet', 'diff', 'card', 'sheet']
@@ -55,6 +60,10 @@ def averages(board_id, args):
             stations[card.lane.station]['sheets wip'] += card.size
         for station in card.stations:
             if station:
+                if from_date and card.stations[station]['out'] < from_date:
+                    continue
+                if to_date and card.stations[station]['out'] > to_date:
+                    continue
                 stations[station]['cards out'] += 1
                 stations[station]['sheets out'] += card.size
                 stations[station]['trt'] += card.stations[station]['trt']

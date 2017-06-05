@@ -29,16 +29,21 @@ class Stats(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('TypeId', action='append')
     parser.add_argument('Priority', action='append')
+    parser.add_argument('FromDate')
+    parser.add_argument('ToDate')
+    # parser.add_argument('ToDate', type=str)
 
     def adapt(self, args):
-        for key in args:
-            args[key] = [int(i) for i in args[key]]
+        for key in ['Priority', 'TypeId']:
+            if key in args:
+                args[key] = [int(i) for i in args[key]]
         return args
 
     def get(self, board_id):
         args = self.parser.parse_args()
-        if args['TypeId'] or args['Priority']:
-            args = self.adapt(args)
-        else:
-            args = {}
-        return stations.averages(board_id, args)
+        args = self.adapt(args)
+        try:
+            avgs = stations.averages(board_id, args)
+        except:
+            avgs = {'data': []}
+        return avgs

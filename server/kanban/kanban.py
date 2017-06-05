@@ -28,32 +28,6 @@ class Converter:
             return camelcase.lower()
 
 
-class Comment:
-    def __init__(self, content, date, user):
-        self.html = content
-        self.date = date
-        self.user = user
-
-    @cached_property
-    def text(self):
-        return utils.strip_tags(self.html)
-
-
-class User(Converter):
-    def __str__(self):
-        return self.user_name
-
-
-class CardType(Converter):
-    def __str__(self):
-        return self.name
-
-
-class ClassOfService(Converter):
-    def __str__(self):
-        return self.title
-
-
 class Card(Converter):
     def __init__(self, data, board):
         super().__init__(data, board)
