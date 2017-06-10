@@ -1,8 +1,10 @@
 from .connector import db
 
 
-def collection(collection, board_id):
-    return list(db[collection].find({'BoardId': board_id}, {'_id': 0}))
+def collection(collection, board_id, query=None):
+    fields = {'BoardId': board_id}
+    fields.update(getattr(query, 'serialize', {}))
+    return list(db[collection].find(fields, {'_id': 0}))
 
 
 def document(collection, board_id):
@@ -22,8 +24,8 @@ def lanes(board_id):
     return collection('lanes', board_id)
 
 
-def cards(board_id, history=True):
-    cards = {card['Id']: card for card in collection('cards', board_id)}
+def cards(board_id, history=True, query=None):
+    cards = {card['Id']: card for card in collection('cards', board_id, query)}
     if history:
         for event in events(board_id):
             card = cards[event['CardId']]
