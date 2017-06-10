@@ -5,7 +5,6 @@ from datetime import datetime
 import officehours
 
 from cached_property import cached_property
-from . import utils
 from .. import database
 
 
@@ -432,6 +431,21 @@ class Station(Converter):
 
     def target(self, card):
         return self.size * card.size + self.card
+
+
+class Phase(Converter):
+    def __init__(self, data, board):
+        self.id = self.position
+        stations = []
+        for station_id in self.stations:
+            station = board.stations[station_id]
+            assert not station.phase, "Station {} belongs to two different phases".format(station)
+            station.phase = self
+            stations.append(station)
+        self.stations = stations
+
+    def __repr__(self):
+        return self.name
 
 
 class Board(Converter):
