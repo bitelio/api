@@ -1,10 +1,13 @@
 import unittest
 
 from server import app
+from server.database import seed
 
 
 class ServerTest(unittest.TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpClass(self):
+        seed.sample()
         self.app = app.test_client()
 
     def test_get_user(self):

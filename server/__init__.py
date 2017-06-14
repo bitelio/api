@@ -1,8 +1,16 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import flask
 from flask_restful import Api
 
 from . import config
 from .resources import kanban
+
+
+__author__ = "Guillermo Guirao Aguilar"
+__email__ = "info@bitelio.com"
+__version__ = '0.0.1'
 
 
 def run():  # pragma: no cover

@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from .connector import db
+from .mappings import roles
 
 
 def collection(collection, board_id, query=None):
@@ -7,8 +10,16 @@ def collection(collection, board_id, query=None):
     return list(db[collection].find(fields, {'_id': 0}))
 
 
-def document(collection, board_id):
-    return db[collection].find_one({'BoardId': board_id}, {'_id': 0})
+def document(collection, doc_id):
+    return db[collection].find_one({'Id': doc_id}, {'_id': 0})
+
+
+def kanban(board_id, query):
+    board = document('boards', board_id)
+    board['Settings'] = document('settings', board_id)
+    board['Lanes'] = collection('lanes', board_id)
+    board['Cards'] = collection('cards', board_id, query)
+    return board
 
 
 def board(board_id):
@@ -41,7 +52,6 @@ def events(board_id):
 
 
 def user(user):
-    roles = {1: 'reader', 2: 'user', 3: '-', 4: 'administrator'}
     field = 'Id' if isinstance(user, int) else 'UserName'
     pipeline = [{'$match': {field: user}},
                 {'$lookup': {'from': 'boards', 'localField': 'BoardId',

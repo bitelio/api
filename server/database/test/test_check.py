@@ -1,9 +1,14 @@
 from unittest import TestCase
 
 from .. import check
+from .. import seed
 
 
 class Load(TestCase):
+    @classmethod
+    def setUpClass(self):
+        seed.sample()
+
     def test_board_exists(self):
         self.assertTrue(check.exists('boards', 100000000))
 

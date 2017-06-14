@@ -1,9 +1,14 @@
 from unittest import TestCase
 
 from .. import load
+from .. import seed
 
 
 class Load(TestCase):
+    @classmethod
+    def setUpClass(self):
+        seed.sample()
+
     def test_get_board(self):
         data = load.board(100000000)
         self.assertIn('CardTypes', data)
