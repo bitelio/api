@@ -189,6 +189,38 @@ class Card(kanban.Card):
             total += self.trt_station(station.id, hours)
         return total
 
+    def total_station(self):
+        total = 0
+        station = self.station
+        for move in self.moves:
+            if move['lane'].station == station:
+                if move['out']:
+                    if not 'trt' in move:
+                        move['trt'] = self.board.timer.working_hours(move['in'], move['out'])
+                    total += move['trt']
+                else:
+                    total += self.board.timer.working_hours(move['in'], )
+        return total
+
+    def end_date_station(self):
+        final_date = None
+        target = self.station.target(self) if self.station else 0
+        for move in self.timeline:
+            if move['lane'].station == self.station:
+                if move['trt'] > target:
+                    final_date = self.board.due_date(target, move['in'])
+                    break
+                else:
+                    target -= move['trt']
+        if not final_date:
+            last_trt = self.board.timer.working_hours(move['in'], datetime.now())
+            if last_trt > target:
+                final_date = self.board.due_date(target, move['in'])
+            else:
+                target -= last_trt
+                final_date = self.board.due_date(target, datetime.now())
+        return final_date
+
     def ect_station(self):
         """ Returns the estimated completion date for the current station """
         if self.station:

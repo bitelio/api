@@ -5,7 +5,7 @@ from datetime import datetime
 import officehours
 
 from cached_property import cached_property
-from .. import database
+from ..database import load
 
 
 class Converter:
@@ -277,6 +277,26 @@ class Card(Converter):
             remaining = self.station.phase.target(self) - self.trt_phase(self.station.phase.id, hours=True)
             return self.board.timer.due_date(remaining, datetime.now())
 
+    def end_date_station(self):
+        final_date = None
+        target = self.station.target(self) if self.station else 0
+        if self.timeline:
+            for move in self.timeline:
+                if move['lane'] and move['lane'].station == self.station:
+                    if move['trt'] > target:
+                        final_date = self.board.timer.due_date(target, move['in'])
+                        break
+                    else:
+                        target -= move['trt']
+            if not final_date:
+                last_trt = self.board.timer.working_hours(move['out'], datetime.now())
+                if last_trt > target:
+                    final_date = self.board.timer.due_date(target, move['out'])
+                else:
+                    target -= last_trt
+                    final_date = self.board.timer.due_date(target, datetime.now())
+        return final_date
+
     def target_station(self, station=None):
         """ Returns the target TRT for a given station
 
@@ -450,12 +470,12 @@ class Phase(Converter):
 
 class Board(Converter):
     def __init__(self, board_id):
-        data = database.load.db.boards.find_one({'Id': board_id})
-        data.update(database.load.db.settings.find_one({'Id': board_id}))
+        data = load.db.boards.find_one({'Id': board_id})
+        data.update(load.db.settings.find_one({'Id': board_id}))
         self.timer = officehours.Calculator(data['OfficeHours']['Open'], data['OfficeHours']['Close'], [])
-        self.lanes = {lane['Id']: Lane(lane, self) for lane in database.load.lanes(board_id)}
-        self.stations = {station['Position']: Station(station, self) for station in database.load.stations(board_id)}
-        self.cards = {card['Id']: Card(card, self) for card in database.load.cards(board_id)}
+        self.lanes = {lane['Id']: Lane(lane, self) for lane in load.lanes(board_id)}
+        self.stations = {station['Position']: Station(station, self) for station in load.stations(board_id)}
+        self.cards = {card['Id']: Card(card, self) for card in load.cards(board_id)}
         super().__init__(data, self)
 
     def __str__(self):
