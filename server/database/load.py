@@ -1,17 +1,21 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from .connector import db
 from .mappings import roles
 
 
-def collection(collection, board_id, query=None):
+def collection(collection, board_id, projection=None, query=None, sorting=None):
     fields = {'BoardId': board_id}
     fields.update(getattr(query, 'serialize', {}))
-    return list(db[collection].find(fields, {'_id': 0}))
+    cursor = db[collection].find(fields, projection or {'_id': 0})
+    if sorting:
+        cursor.sort(sorting)
+    return list(cursor)
 
 
-def document(collection, doc_id):
-    return db[collection].find_one({'Id': doc_id}, {'_id': 0})
+def document(collection, doc_id, projection=None):
+    return db[collection].find_one({'Id': doc_id}, projection or {'_id': 0})
 
 
 def kanban(board_id, query):
@@ -23,32 +27,23 @@ def kanban(board_id, query):
 
 
 def board(board_id):
-    board = db.boards.find_one({'Id': board_id}, {'_id': 0})
+    board = document('boards', board_id)
     if board:
         board['CardTypes'] = collection('card_types', board_id)
         board['ClassesOfService'] = collection('classes_of_service', board_id)
-        board['Settings'] = document('settings', board_id)
     return board
-
-
-def lanes(board_id):
-    return collection('lanes', board_id)
 
 
 def cards(board_id, history=True, query=None):
     cards = {card['Id']: card for card in collection('cards', board_id, query)}
     if history:
-        for event in events(board_id):
+        for event in collection('events', board_id, sorting='Position'):
             card = cards[event['CardId']]
             if 'History' in card:
                 card['History'].append(event)
             else:
                 card['History'] = [event]
     return list(cards.values())
-
-
-def events(board_id):
-    return db.events.find({'BoardId': board_id}, {'_id': 0}).sort('Position')
 
 
 def user(user):

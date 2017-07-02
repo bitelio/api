@@ -1,11 +1,11 @@
 [{
-  "Id": 1,
+  "Position": 1,
   "Title": "Phase 1",
   "Stations": [1, 2],
   "BoardId": 200000000
 },
 {
-  "Id": 2,
+  "Position": 2,
   "Title": "Phase 2",
   "Stations": [3],
   "BoardId": 200000000

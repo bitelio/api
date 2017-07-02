@@ -19,11 +19,11 @@ class Load(TestCase):
         self.assertIsNone(data)
 
     def test_get_lanes(self):
-        data = load.lanes(100000000)
+        data = load.collection('lanes', 100000000)
         self.assertEqual(10, len(data))
 
     def test_lanes_not_found(self):
-        data = load.lanes(300000000)
+        data = load.collection('lanes', 300000000)
         self.assertEqual([], data)
 
     def test_get_cards(self):
