@@ -4,7 +4,7 @@ from .. import check
 from .. import seed
 
 
-class Load(TestCase):
+class CheckTest(TestCase):
     @classmethod
     def setUpClass(self):
         seed.sample()

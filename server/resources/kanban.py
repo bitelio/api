@@ -33,7 +33,8 @@ class Collection(Base):
 
 class Group(Collection):
     def post(self, board_id):
-        database.check.exists('boards', board_id) or self.not_found(board_id)
+        if not database.check.exists('boards', board_id):
+            self.not_found(board_id)
         payload = self.validate(request.get_json(force=True), board_id)
         database.remove.collection(self.name, board_id)
         if database.save.collection(self.name, payload):
@@ -55,7 +56,8 @@ class Group(Collection):
 
 
 class User(Resource):
-    def get(self, username):
+    @staticmethod
+    def get(username):
         return database.load.user(username) or \
             abort(404, message="User {} not found".format(username))
 

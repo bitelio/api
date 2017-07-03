@@ -10,5 +10,5 @@ def collection(collection, data):
         for item in data:
             item['_id'] = str(item['_id'])
         return data
-    except:
+    except TypeError:
         return False

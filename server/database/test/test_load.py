@@ -4,7 +4,7 @@ from .. import load
 from .. import seed
 
 
-class Load(TestCase):
+class LoadTest(TestCase):
     @classmethod
     def setUpClass(self):
         seed.sample()
