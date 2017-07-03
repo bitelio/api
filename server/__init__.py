@@ -3,6 +3,7 @@
 
 import flask
 from flask_restful import Api
+from raven.contrib.flask import Sentry
 
 from . import config
 from .resources import kanban
@@ -27,3 +28,5 @@ api.add_resource(kanban.Lanes, '/lanes/<int:board_id>')
 api.add_resource(kanban.Phases, '/phases/<int:board_id>')
 api.add_resource(kanban.Stations, '/stations/<int:board_id>')
 api.add_resource(kanban.Settings, '/settings/<int:board_id>')
+
+sentry = Sentry(app)
