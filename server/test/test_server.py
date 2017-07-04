@@ -4,15 +4,15 @@
 import unittest
 
 import json
-from server import app
-from server.database import seed
+from .. import app
+from ..database import seed
 
 
 class ServerTest(unittest.TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
         seed.sample()
-        self.app = app.test_client()
+        cls.app = app.test_client()
 
     def test_get_user(self):
         response = self.app.get('/user/user@example.org')

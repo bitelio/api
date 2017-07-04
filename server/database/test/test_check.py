@@ -6,7 +6,7 @@ from .. import seed
 
 class CheckTest(TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
         seed.sample()
 
     def test_board_exists(self):

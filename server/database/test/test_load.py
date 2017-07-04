@@ -6,7 +6,7 @@ from .. import seed
 
 class LoadTest(TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
         seed.sample()
 
     def test_get_board(self):
