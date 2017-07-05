@@ -6,13 +6,13 @@ from setuptools import setup
 
 
 def version():
-    init = path.join(path.dirname(__file__), 'server', '__init__.py')
+    init = path.join(path.dirname(__file__), 'api', '__init__.py')
     line = list(filter(lambda l: l.startswith('__version__'), open(init)))[0]
     return line.split('=')[-1].strip(" '\"\n")
 
 
 setup(name='api',
-      packages=['server'],
+      packages=['api'],
       version=version(),
       author='Guillermo Guirao Aguilar',
       author_email='info@bitelio.com',
@@ -21,4 +21,4 @@ setup(name='api',
                         'raven', 'blinker'],
       setup_requires=['nose', 'rednose', 'coverage'],
       classifiers=['Programming Language :: Python :: 3.5'],
-      entry_points={'console_scripts': ['api = server:run']})
+      entry_points={'console_scripts': ['run = api:run']})
