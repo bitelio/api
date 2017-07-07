@@ -1,10 +1,7 @@
 language: python
-python:
-  - 3.5
-services:
-  - mongodb
-script:
-  - python setup.py nosetests
+python: 3.5
+services: mongodb
+script: python setup.py nosetests
 addons:
   apt:
     sources:
