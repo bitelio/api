@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 from schematics.models import Model
 from schematics.types import ListType
 from schematics.types import IntType
@@ -38,7 +35,6 @@ class Station(Model):
 
 
 class Phase(Model):
-    Position = IntType(required=True)
     Title = StringType(required=True)
     Stations = ListType(StringType, required=True)
     BoardId = KanbanIdType(required=True)

@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import flask
 from flask_restful import Api
 from raven.contrib.flask import Sentry
