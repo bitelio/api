@@ -11,11 +11,6 @@ __email__ = "info@bitelio.com"
 __version__ = '0.0.1'
 
 
-def run():  # pragma: no cover
-    global app
-    app.run()
-
-
 app = flask.Flask(__name__)
 app.config.from_object(config)
 api = Api(app, catch_all_404s=True)

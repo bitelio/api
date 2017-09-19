@@ -20,5 +20,4 @@ setup(name='api',
       install_requires=['schematics', 'flask_restful', 'pymongo', 'pytz',
                         'raven', 'blinker'],
       setup_requires=['nose', 'rednose', 'coverage'],
-      classifiers=['Programming Language :: Python :: 3.5'],
-      entry_points={'console_scripts': ['run = api:run']})
+      classifiers=['Programming Language :: Python :: 3.6'])
