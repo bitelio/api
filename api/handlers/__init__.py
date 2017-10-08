@@ -1,61 +1,67 @@
-from collections import Counter
+from json import dumps, loads
+from logging import getLogger
+from tornado.web import RequestHandler
+from schematics.models import ModelMeta, Model
 from schematics.exceptions import DataError
-from flask_restful import Resource
-from flask_restful import abort
-from flask import request
 
-from .. import database
+from api import cache, handlers
 
 
-class Base(Resource):
+class BaseHandler(RequestHandler):
+    SUPPORTED_METHODS = ["POST", "PUT"]
+
+    def initialize(self):
+        self.db = self.settings["db"]
+
+    def prepare(self):
+        try:
+            self.model = self.schema(self.body, validate=True)
+        except DataError as error:
+            self.write_error(400, message=str(error))
+            self.log.warning(str(error))
+        # if self.model in cache:
+            # self.write(cache.get(self.model))
+
+    def write(self, chunk):
+        response = dumps(chunk).replace("</", "<\\/").encode("utf-8")
+        self.set_header("Content-Type", "application/json; charset=UTF-8")
+        self._write_buffer.append(response)
+
+    def write_error(self, status_code=None, message=None, exc_info=None):
+        self.set_status(status_code or self._status_code)
+        self.write({"error": {"code": status_code, "message": message}})
+        self.finish()
+
     @property
-    def name(self):
-        return self.__class__.__name__
+    def body(self):
+        return loads(self.request.body or "{}")
 
-    @staticmethod
-    def not_found(board_id):
-        abort(404, message="Board {} not found".format(board_id))
+    @property
+    def log(self):
+        return getLogger(f"{self.__module__}.{self.__class__.__name__}")
 
-
-class Collection(Base):
-    """ List of kanban items with unique ids """
-    sorting = None
-
-    def get(self, board_id):
-        data = database.load.collection(self.name, board_id, self.sorting)
-        if data or database.check.exists('boards', board_id):
-            return data
-        else:
-            self.not_found(board_id)
+    @property
+    def schema(self):
+        name = self.__class__.__name__[:-7]
+        module = getattr(handlers, name.lower())
+        return getattr(module, f"{name}Model")
 
 
-class Group(Collection):
-    """ List of sorted items """
-    def post(self, board_id):
-        if not database.check.exists('boards', board_id):
-            self.not_found(board_id)
-        payload = self.validate(request.get_json(force=True), board_id)
-        database.remove.collection(self.name, board_id)
-        if database.save.collection(self.name, payload):
-            return payload, 201
-        else:
-            return abort(500, "Couldn't write to database")
+class NotFoundHandler(BaseHandler):
+    def prepare(self):
+        self.write_error(404, "Invalid URL")
 
-    def validate(self, data, board_id):
-        for item in data:
-            if item['BoardId'] != board_id:
-                abort(400, message="Board id doesn't match")
-            try:
-                self.model(item).validate()
-            except DataError as error:
-                abort(400, message=str(error))
-        if not database.check.exists('boards', board_id):
-            abort(400, message="Board {} not found".format(board_id))
-        return data
 
-    def duplicate(self, data):
-        items = [item for group in data for item in group[self.name]]
-        duplicates = [key for key, value in Counter(items) if value > 1]
-        if duplicates:
-            abort(400, message=f"{self.name} has a duplicate: {duplicates[0]}")
-        return items
+class MetaModel(ModelMeta):
+    def __call__(cls, *args, **kwargs):
+        if "method" in kwargs:
+            method = kwargs.pop("method")
+            mixin = getattr(cls, method, type(method, (object,), {}))
+            name = f"{cls.__name__} ({mixin.__name__})"
+            cls = type(name, (mixin, cls), dict(cls.__dict__))
+        return type.__call__(cls, *args, **kwargs)
+
+
+class BaseModel(Model, metaclass=MetaModel):
+    class Options:
+        serialize_when_none = False

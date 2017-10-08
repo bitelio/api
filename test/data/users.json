@@ -1,0 +1,29 @@
+[
+  {
+    "BoardId": 100000000,
+    "Id": 123456789,
+    "FullName": "User 1",
+    "UserName": "user1@example.org",
+    "Role": 4,
+    "Enabled": true,
+    "GravatarLink": "36020adab302af77eb6273e0b2ead7cf"
+  },
+  {
+    "BoardId": 100000000,
+    "Id": 987654321,
+    "FullName": "User 2",
+    "UserName": "user2@example.org",
+    "Role": 1,
+    "Enabled": true,
+    "GravatarLink": "ad541fdc731c55acefeb129d8ef01d7b"
+  },
+  {
+    "BoardId": 200000000,
+    "Id": 123456789,
+    "FullName": "User 1",
+    "UserName": "user1@example.org",
+    "Role": 2,
+    "Enabled": true,
+    "GravatarLink": "36020adab302af77eb6273e0b2ead7cf"
+  }
+]

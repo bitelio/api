@@ -1,0 +1,50 @@
+[
+  {
+    "BoardId": 100000000,
+    "Id": 100000011,
+    "Name": "Deliverable",
+    "ColorHex": "#ff6c00",
+    "IsCardType": true,
+    "IsTaskType": true
+  },
+  {
+    "BoardId": 100000000,
+    "Id": 100000012,
+    "Name": "Improvement",
+    "ColorHex": "#d3e0e4",
+    "IsCardType": true,
+    "IsTaskType": true
+  },
+  {
+    "BoardId": 100000000,
+    "Id": 100000013,
+    "Name": "Issue",
+    "ColorHex": "#f69679",
+    "IsCardType": true,
+    "IsTaskType": true
+  },
+  {
+    "BoardId": 100000000,
+    "Id": 100000014,
+    "Name": "Project",
+    "ColorHex": "#8cc63f",
+    "IsCardType": true,
+    "IsTaskType": true
+  },
+  {
+    "BoardId": 100000000,
+    "Id": 100000015,
+    "Name": "Task",
+    "ColorHex": "#f5f2bc",
+    "IsCardType": true,
+    "IsTaskType": true
+  },
+  {
+    "BoardId": 200000000,
+    "Id": 200000011,
+    "Name": "Type",
+    "ColorHex": "#ff6c00",
+    "IsCardType": true,
+    "IsTaskType": true
+  }
+]

@@ -1,0 +1,4 @@
+host: mongodb://localhost/test
+port: 27017
+connect: True
+tz_aware: True

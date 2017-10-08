@@ -1,0 +1,5 @@
+-r main
+pytest
+pymongo
+mongomock
+coverage

@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 100000101,
+    "Title": "Date Dependent",
+    "ColorHex": "#FFFFFF",
+    "UseColor": false
+  },
+  {
+    "Id": 100000102,
+    "Title": "Expedite",
+    "ColorHex": "#FFFFFF",
+    "UseColor": false
+  },
+  {
+    "Id": 100000103,
+    "Title": "Regulatory",
+    "ColorHex": "#FFFFFF",
+    "UseColor": false
+  },
+  {
+    "Id": 100000104,
+    "Title": "Standard",
+    "ColorHex": "#FFFFFF",
+    "UseColor": false
+  },
+  {
+    "Id": 200000101,
+    "Title": "Service",
+    "ColorHex": "#FFFFFF",
+    "UseColor": false
+  }
+]

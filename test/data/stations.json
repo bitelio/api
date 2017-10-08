@@ -1,0 +1,34 @@
+[
+  {
+    "Name": "Station 1",
+    "Position": 1,
+    "Lanes": [100001003],
+    "Card": 3,
+    "Size": 0.5,
+    "Phase": ""
+  },
+  {
+    "Name": "Station 2",
+    "Position": 2,
+    "Lanes": [100001005, 100001006],
+    "Card": 0,
+    "Size": 1,
+    "Phase": ""
+  },
+  {
+    "Name": "Station 3",
+    "Position": 3,
+    "Lanes": [100001008],
+    "Card": 2,
+    "Size": 1,
+    "Phase": ""
+  },
+  {
+    "Name": "Station 4",
+    "Position": 4,
+    "Lanes": [100001009, 100001010],
+    "Card": 5,
+    "Size": 0,
+    "Phase": "Phase A"
+  }
+]

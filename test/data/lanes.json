@@ -1,0 +1,263 @@
+[
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001001,
+    "Index": 0,
+    "LaneState": "lane",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "backlog",
+    "SiblingLaneIds": [
+      100001002,
+      100001003,
+      100001004,
+      100001007,
+      100001012
+    ],
+    "Title": "Backlog",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001002,
+    "Index": 1,
+    "LaneState": "lane",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001001,
+      100001003,
+      100001004,
+      100001007,
+      100001012
+    ],
+    "Title": "Pre-phase",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001003,
+    "Index": 2,
+    "LaneState": "lane",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001001,
+      100001002,
+      100001004,
+      100001007,
+      100001012
+    ],
+    "Title": "Station 1",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [
+      100001005,
+      100001006
+    ],
+    "Id": 100001004,
+    "Index": 3,
+    "LaneState": "parent",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001001,
+      100001002,
+      100001003,
+      100001007,
+      100001012
+    ],
+    "Title": "Station 2",
+    "Width": 2
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001005,
+    "Index": 0,
+    "LaneState": "child",
+    "Orientation": 0,
+    "ParentLaneId": 100001004,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001006
+    ],
+    "Title": "Lane 2.1",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001006,
+    "Index": 1,
+    "LaneState": "child",
+    "Orientation": 0,
+    "ParentLaneId": 100001004,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001005
+    ],
+    "Title": "Lane 2.2",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [
+      100001008,
+      100001009
+    ],
+    "Id": 100001007,
+    "Index": 4,
+    "LaneState": "parent",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001001,
+      100001002,
+      100001003,
+      100001004,
+      100001012
+    ],
+    "Title": "Phase A",
+    "Width": 2
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001008,
+    "Index": 0,
+    "LaneState": "child",
+    "Orientation": 0,
+    "ParentLaneId": 100001007,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001009
+    ],
+    "Title": "Station 3",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [
+      100001010,
+      100001011
+    ],
+    "Id": 100001009,
+    "Index": 1,
+    "LaneState": "childParent",
+    "Orientation": 0,
+    "ParentLaneId": 100001007,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001008
+    ],
+    "Title": "Station 4",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001010,
+    "Index": 0,
+    "LaneState": "child",
+    "Orientation": 1,
+    "ParentLaneId": 100001009,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001011
+    ],
+    "Title": "Lane 4.1",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001011,
+    "Index": 1,
+    "LaneState": "child",
+    "Orientation": 1,
+    "ParentLaneId": 100001009,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      100001010
+    ],
+    "Title": "Lane 4.2",
+    "Width": 1
+  },
+  {
+    "BoardId": 100000000,
+    "ChildLaneIds": [],
+    "Id": 100001012,
+    "Index": 5,
+    "LaneState": "lane",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "archive",
+    "SiblingLaneIds": [
+      100001001,
+      100001002,
+      100001003,
+      100001004,
+      100001007
+    ],
+    "Title": "Archive",
+    "Width": 1
+  },
+  {
+    "BoardId": 200000000,
+    "ChildLaneIds": [],
+    "Id": 200001001,
+    "Index": 0,
+    "LaneState": "lane",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "backlog",
+    "SiblingLaneIds": [
+      200001002,
+      200001003
+    ],
+    "Title": "Backlog",
+    "Width": 1
+  },
+  {
+    "BoardId": 200000000,
+    "ChildLaneIds": [],
+    "Id": 200001002,
+    "Index": 1,
+    "LaneState": "lane",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "wip",
+    "SiblingLaneIds": [
+      200001001,
+      200001003
+    ],
+    "Title": "WIP",
+    "Width": 1
+  },
+  {
+    "BoardId": 200000000,
+    "ChildLaneIds": [],
+    "Id": 200001003,
+    "Index": 5,
+    "LaneState": "lane",
+    "Orientation": 0,
+    "ParentLaneId": null,
+    "Stage": "archive",
+    "SiblingLaneIds": [
+      200001001,
+      200001002
+    ],
+    "Title": "Archive",
+    "Width": 1
+  }
+]
