@@ -17,7 +17,8 @@ class APITestCase(AsyncHTTPTestCase):
             db.drop_collection(collection)
             db[collection].insert_many(read(collection))
 
-    def get_app(self):
+    @staticmethod
+    def get_app():
         return app(debug=False)
 
     def post(self, url, body):

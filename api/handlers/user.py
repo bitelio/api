@@ -2,7 +2,7 @@ from schematics.models import Model
 from schematics.types.net import EmailType
 
 from api import route
-from api.handlers import BaseHandler
+from api.handlers import BaseHandler, BaseModel
 
 
 @route
@@ -25,7 +25,7 @@ class UserHandler(BaseHandler):
             self.write_error(404, f"User {self.model.UserName} not found")
 
 
-class UserModel(Model):
+class UserModel(BaseModel):
     UserName = EmailType(required=True)
 
     @property

@@ -15,7 +15,8 @@ class BaseHandler(RequestHandler):
 
     def prepare(self):
         try:
-            self.model = self.schema(self.body, validate=True)
+            method = self.request.method
+            self.model = self.schema(self.body, method=method, validate=True)
         except DataError as error:
             self.write_error(400, message=str(error))
             self.log.warning(str(error))
