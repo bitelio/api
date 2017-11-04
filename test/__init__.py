@@ -9,8 +9,6 @@ from api import app
 
 
 class APITestCase(AsyncHTTPTestCase):
-    seed = []
-
     @classmethod
     def setUpClass(cls):
         for collection in cls.seed:
@@ -21,8 +19,14 @@ class APITestCase(AsyncHTTPTestCase):
     def get_app():
         return app(debug=False)
 
-    def post(self, url, body):
-        return self.fetch(url, method="POST", body=dumps(body or {}))
+    def submit(self, method, body):
+        return self.fetch(self.url, method=method, body=dumps(body))
+
+    def post(self, body):
+        return self.submit("POST", body)
+
+    def put(self, body):
+        return self.submit("PUT", body)
 
 
 def read(name):
