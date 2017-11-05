@@ -1,7 +1,9 @@
 blinker
+hiredis
 motor
 pytz
 pyyaml
 raven
+redis
 schematics
 tornado

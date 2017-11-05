@@ -1,43 +1,25 @@
-from schematics.types import IntType
-
-from api import route, cache
-from api.handlers import BaseHandler, BaseModel
+import api
 
 
-@route
-class BoardHandler(BaseHandler):
-    async def post(self):
-        self.check(await self.db.boards.aggregate(self.model.query))
-
-    async def check(self, data):
-        if data:
-            self.write(data)
-        elif await self.exists():
-            self.write([])
-        else:
+@api.route
+class BoardHandler(api.handlers.BaseHandler):
+    def prepare(self):
+        super().prepare()
+        if self.model.BoardId not in api.boards:
             self.write_error(404, f"Board {self.model.BoardId} not found")
 
-    async def exists(self):
-        return await self.db.boards.find_one({"Id": self.model.BoardId})
+    async def load(self):
+        return await api.db.boards.aggregate(self.model.query).to_list(10)
 
-
-class BoardModel(BaseModel):
-    BoardId = IntType(required=True)
-
-    @property
-    def query(self):
-        ignored = cache.board[self.BoardId]["Ignored"]
-        pipeline = [{"$match": {"Id": self.BoardId}},
-                    {"$lookup":
-                        {"from": "card_types", "localField": "Id",
-                         "foreignField": "BoardId", "as": "CardTypes"}},
-                    {"$lookup":
-                        {"from": "classes_of_service", "localField": "Id",
-                         "foreignField": "BoardId", "as": "ClassesOfService"}}]
-        if ignored["TypeId"]:
-            match = {"CardTypes.Id": {"$ne": ignored["TypeId"]}}
-            pipeline.append(({"$match": match}))
-        if ignored["ClassOfServiceId"]:
-            match = {"ClassesOfService.Id": {"$ne": ignored["ClassOfServiceId"]}}
-            pipeline.append(({"$match": match}))
-        return pipeline
+    async def post(self):
+        model_id = self.model.hash
+        cached = api.cache.get(model_id)
+        if cached:
+            self.log.debug("Sending cached data")
+            self.write(cached)
+        else:
+            self.write(await self.load())
+            pipeline = api.cache.pipeline()
+            pipeline.set(model_id, b"".join(self._write_buffer))
+            pipeline.set(self.model["BoardId"], model_id)
+            pipeline.execute()

@@ -1,39 +1,13 @@
-from os import path
-from json import load, dumps
+from os import path, listdir
+from json import load
 from pytz import timezone
 from datetime import datetime
-from pymongo import MongoClient
-from tornado.testing import AsyncHTTPTestCase
-
-from api import app
 
 
-class APITestCase(AsyncHTTPTestCase):
-    @classmethod
-    def setUpClass(cls):
-        for collection in cls.seed:
-            db.drop_collection(collection)
-            db[collection].insert_many(read(collection))
-
-    @staticmethod
-    def get_app():
-        return app(debug=False)
-
-    def submit(self, method, body):
-        return self.fetch(self.url, method=method, body=dumps(body))
-
-    def post(self, body):
-        return self.submit("POST", body)
-
-    def put(self, body):
-        return self.submit("PUT", body)
-
-
-def read(name):
-    folder = path.join(path.dirname(__file__), "data")
-    with open(path.join(folder, f"{name}.json")) as json:
+def read(collection):
+    with open(path.join(folder, f"{collection}.json")) as json:
         data = load(json)
-    if name is "events":
+    if collection is "events":
         with open(path.join(folder, "settings.json")) as json:
             settings = load(json)
         timezones = {doc["Id"]: timezone(doc["Timezone"]) for doc in settings}
@@ -43,4 +17,5 @@ def read(name):
     return data
 
 
-db = MongoClient()["test"]
+folder = path.join(path.dirname(__file__), "data")
+collections = [path.basename(filename)[:-5] for filename in listdir(folder)]

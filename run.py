@@ -1,4 +1,4 @@
-from api import run
+import api
 
 
-run()
+api.run()

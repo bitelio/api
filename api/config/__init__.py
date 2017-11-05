@@ -1,7 +1,11 @@
+from os import getenv, path, listdir
 from yaml import safe_load
-from os import listdir, path
 
 
+debug = getenv("DEBUG", True)
+port = getenv("API_PORT", 8080)
+redis = getenv("REDIS_URI", "localhost")
+mongo = getenv("MONGODB_URI", "mongodb://localhost/kanban")
 dirname = path.dirname(__file__)
 for filename in filter(lambda name: name.endswith(".yml"), listdir(dirname)):
     with open(path.join(dirname, filename)) as options:

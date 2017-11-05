@@ -1,5 +1,7 @@
 language: python
 python: 3.6
-services: mongodb
+services:
+  - mongodb
+  - redis-server
 install: pip install -r requirements/test
 script: pytest

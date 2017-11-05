@@ -1,5 +1,4 @@
 -r main
-pytest
-pymongo
-mongomock
 coverage
+pymongo
+pytest
