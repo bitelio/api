@@ -6,22 +6,22 @@ from . import APITestCase, restore
 class TestStationsHandler(APITestCase):
     url = "/board/stations"
 
-    def test_post(self):
+    def test_get_stations(self):
         response = self.post({"BoardId": 100000000})
         assert response.code == 200
         assert len(loads(response.body)) == 4
 
-    def test_no_stations(self):
+    def test_get_no_stations(self):
         response = self.post({"BoardId": 200000000})
         assert response.code == 200
         assert len(loads(response.body)) == 0
 
-    def test_not_found(self):
+    def test_board_not_found(self):
         response = self.post({"BoardId": 300000000})
         assert response.code == 404
 
     @restore("stations")
-    def test_put(self):
+    def test_put_stations(self):
         payload = {"BoardId": 200000000, "Stations": [{"Name": "Test"}]}
         response = self.put(payload)
         expected = [{"Name": "Test", "Position": 0, "BoardId": 200000000,
@@ -32,10 +32,6 @@ class TestStationsHandler(APITestCase):
         assert response.code == 200
         assert loads(response.body) == []
 
-    def test_put_fail(self):
+    def test_put_stations_and_fail(self):
         response = self.put({"BoardId": 200000000})
         assert response.code == 400
-
-    def test_put_not_found(self):
-        response = self.put({"BoardId": 300000000, "Stations": []})
-        assert response.code == 404

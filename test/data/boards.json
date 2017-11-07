@@ -2,18 +2,12 @@
   {
     "Id": 100000000,
     "Title": "Board 100000000",
-    "TopLevelLaneIds": [100001002, 100001003],
-    "BacklogTopLevelLaneId": 100001001,
-    "ArchiveTopLevelLaneId": 100001008,
     "AvailableTags": "Tag1,Tag2",
     "Version": 1000
   },
   {
     "Id": 200000000,
     "Title": "Board 200000000",
-    "TopLevelLaneIds": [200001002],
-    "BacklogTopLevelLaneId": 200001001,
-    "ArchiveTopLevelLaneId": 200001003,
     "AvailableTags": "",
     "Version": 2000
   }

@@ -1,13 +1,14 @@
-import api
+from api import route
+from api.handlers import BaseHandler
 
 
-@api.route
-class UserHandler(api.handlers.BaseHandler):
+@route
+class UserHandler(BaseHandler):
     roles = {1: "reader", 2: "user", 3: "manager", 4: "administrator"}
 
     async def post(self):
         boards = []
-        async for document in api.db.users.aggregate(self.model.query):
+        async for document in self.db.users.aggregate(self.model.query):
             boards.append({"BoardId": document["BoardId"],
                            "BoardTitle": document["Board"][0]["Title"],
                            "Enabled": document["Enabled"],

@@ -8,7 +8,7 @@ from api.models.board import BoardModel
 class TestBoardModel(TestCase):
     def test_query(self):
         board = BoardModel({"BoardId": 100000000})
-        assert len(board.query) == 3
+        assert len(board.query) == 4
 
     def test_bad_query(self):
         with raises(DataError):

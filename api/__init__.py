@@ -9,7 +9,6 @@ from logging.config import dictConfig
 from tornado.web import Application
 from tornado.platform.asyncio import AsyncIOMainLoop
 from motor.motor_tornado import MotorClient
-from pymongo import MongoClient
 from redis import StrictRedis
 
 from . import config, utils
@@ -26,16 +25,13 @@ def route(handler):
 
 
 def start(**kwargs):
-    global db, cache, boards
     log.info("Starting api")
     for key, value in kwargs.items():
         setattr(config, key, value)
     db = MotorClient(config.mongo, tz_aware=True).get_default_database()
     cache = StrictRedis(config.redis)
-    pymongo = MongoClient(config.mongo).get_default_database()
-    boards = [board["Id"] for board in pymongo.boards.find()]
     return Application(routes, default_handler_class=handlers.NotFoundHandler,
-                       debug=config.debug)
+                       db=db, cache=cache, debug=config.debug)
 
 
 def run(app=None):
@@ -48,5 +44,5 @@ def run(app=None):
 routes = []
 log = getLogger(__name__)
 dictConfig(config.logging)
-handlers = utils.load("handlers")
 models = utils.load("models")
+handlers = utils.load("handlers")

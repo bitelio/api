@@ -9,6 +9,11 @@ from api import models
 class BaseHandler(RequestHandler):
     SUPPORTED_METHODS = ["POST", "PUT"]
 
+    def initialize(self, **options):
+        self.__dict__.update(options)
+        self.db = self.settings["db"]
+        self.cache = self.settings["cache"]
+
     def prepare(self):
         try:
             method = self.request.method

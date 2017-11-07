@@ -7,7 +7,7 @@
     "Holidays": ["2017-05-01"],
     "Ignore": {
       "TypeId": [100000015],
-      "ClassOfServiceId": [100000104, 100000104]
+      "ClassOfServiceId": [100000103, 100000104]
     }
   },
   {
