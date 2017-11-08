@@ -1,5 +1,5 @@
-from json import dumps, loads
-from logging import getLogger
+from json import loads
+from bson.json_util import dumps
 from tornado.web import RequestHandler
 from schematics.exceptions import DataError
 
@@ -9,9 +9,9 @@ from api import models
 class BaseHandler(RequestHandler):
     SUPPORTED_METHODS = ["POST", "PUT"]
 
-    def initialize(self, **options):
-        self.__dict__.update(options)
+    def initialize(self):
         self.db = self.settings["db"]
+        self.log = self.settings["log"]
         self.cache = self.settings["cache"]
 
     def prepare(self):
@@ -24,7 +24,7 @@ class BaseHandler(RequestHandler):
 
     def write(self, chunk):
         if isinstance(chunk, (dict, list)):
-            chunk = dumps(chunk).replace("</", "<\\/").encode("utf-8")
+            chunk = dumps(chunk).encode("utf-8")
         self.set_header("Content-Type", "application/json; charset=UTF-8")
         self._write_buffer.append(chunk)
 
@@ -36,10 +36,6 @@ class BaseHandler(RequestHandler):
     @property
     def body(self):
         return loads(self.request.body or "{}")
-
-    @property
-    def log(self):
-        return getLogger(f"{self.__module__}.{self.__class__.__name__}")
 
     @property
     def schema(self):

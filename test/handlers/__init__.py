@@ -8,7 +8,7 @@ from test import read
 class APITestCase(AsyncHTTPTestCase):
     @staticmethod
     def get_app():
-        return start(mongo="mongodb://localhost/test", debug=False)
+        return start("test")
 
     def tearDown(self):
         self._app.settings["cache"].flushdb()

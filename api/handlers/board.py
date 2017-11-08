@@ -12,7 +12,6 @@ class BoardHandler(BaseHandler):
             self.write_error(404, f"Board {self.model.BoardId} not found")
 
     async def load(self):
-        print(self.model.query)
         cursor = self.db.boards.aggregate(self.model.query)
         await cursor.fetch_next
         return cursor.next_object()
@@ -21,7 +20,7 @@ class BoardHandler(BaseHandler):
         model_id = self.model.hash
         cached = self.cache.get(model_id)
         if cached:
-            self.log.debug("Sending cached data")
+            self.log.debug("Cached response")
             self.write(cached)
         else:
             self.write(await self.load())

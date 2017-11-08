@@ -1,4 +1,5 @@
 -r main
 coverage
+fakeredis
 pymongo
 pytest
