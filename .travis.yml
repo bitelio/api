@@ -1,7 +1,14 @@
 language: python
 python: 3.6
+sudo: false
+addons:
+  apt:
+    sources:
+      - mongodb-3.4-precise
+    packages:
+      - mongodb-org-server
 services:
-  - mongodb
-  - redis-server
+ - mongodb
+ - redis-server
 install: pip install -r requirements/test
 script: pytest
