@@ -1,4 +1,6 @@
+from pytest import raises
 from unittest import TestCase
+from schematics.exceptions import DataError
 
 from api.models.stations import StationsModel
 
@@ -28,3 +30,10 @@ class TestStationsModel(TestCase):
                      "Phase": None, "BoardId": 100000000, "Position": 1,
                      "Lanes": []}]
         assert self.model.payload == expected
+
+    def test_validation(self):
+        data = {"BoardId": 100000000,
+                "Stations": [{"Name": "Station 1", "Lanes": [100001003]},
+                             {"Name": "Station 2", "Lanes": [100001003]}]}
+        with raises(DataError):
+            StationsModel(data, method="PUT", validate=True)
