@@ -17,16 +17,15 @@ class BoardHandler(BaseHandler):
         return cursor.next_object()
 
     async def post(self):
-        model_id = self.model.hash
-        cached = self.cache.get(model_id)
+        cached = self.cache.get(self.model.id)
         if cached:
             self.log.debug("Cached response")
             self.write(cached)
         else:
             self.write(await self.load())
             pipeline = self.cache.pipeline()
-            pipeline.set(model_id, b"".join(self._write_buffer))
-            pipeline.set(self.model["BoardId"], model_id)
+            pipeline.set(self.model.id, b"".join(self._write_buffer))
+            pipeline.set(self.model["BoardId"], self.model.id)
             pipeline.execute()
 
     async def exists(self):

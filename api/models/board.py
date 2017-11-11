@@ -6,6 +6,24 @@ from api.models import BaseModel
 class BoardModel(BaseModel):
     BoardId = IntType(required=True)
 
+    fields = ["Id", "Title", "AvailableTags",
+              {"CardTypes": ["Id", "Name", "Ignore"],
+               "ClassesOfService": ["Id", "Title", "Ignore"]}]
+
+    @property
+    def projection(self):
+        fields = {"_id": 0}
+        for field in self.fields:
+            if isinstance(field, str):
+                fields[field] = 1
+            elif isinstance(field, dict):
+                for name, subitems in field.items():
+                    for item in subitems:
+                        fields[f"{name}.{item}"] = 1
+            else:
+                raise ValueError("Invalid fields format")
+        return fields
+
     @property
     def query(self):
         return [{"$match": {"Id": self.BoardId}},
@@ -15,6 +33,4 @@ class BoardModel(BaseModel):
                 {"$lookup":
                     {"from": "classes_of_service", "localField": "Id",
                      "foreignField": "BoardId", "as": "ClassesOfService"}},
-                {"$project":
-                    {"_id": 0, "CardTypes._id": 0, "ClassesOfService._id": 0,
-                     "CardTypes.BoardId": 0, "ClassesOfService.BoardId": 0}}]
+                {"$project": self.projection}]

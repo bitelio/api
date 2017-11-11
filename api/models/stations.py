@@ -15,6 +15,8 @@ class StationModel(Model):
 
 
 class StationsModel(BoardModel):
+    fields = ["Name", "Card", "Size", "Lanes", "Phase"]
+
     class PUT(Model):
         Stations = ListType(ModelType(StationModel), required=True)
 
@@ -26,18 +28,8 @@ class StationsModel(BoardModel):
                 raise DataError({"Duplicate lanes": duplicates})
 
     @property
-    def match(self):
-        return {"$match": {"BoardId": self.BoardId}}
-
-    @property
     def query(self):
         return {"BoardId": self.BoardId}
-
-    @property
-    def projection(self):
-        fields = {key: 1 for key in StationModel().keys()}
-        fields.update({"_id": 0})
-        return fields
 
     @property
     def payload(self):

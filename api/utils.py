@@ -11,7 +11,3 @@ def load(name):
             feature = filename[:-3]
             setattr(module, feature, import_module(f"api.{name}.{feature}"))
     return module
-
-
-def find(service):
-    module, cls = match("\W")

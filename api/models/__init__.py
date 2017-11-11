@@ -18,6 +18,8 @@ class BaseModel(Model, metaclass=MetaModel):
         serialize_when_none = False
 
     @property
-    def hash(self):
-        pickle = dumps((self.__class__.__name__, dict(self._data)))
-        return sha1(pickle).hexdigest()
+    def id(self):
+        if not hasattr(self, "__id__"):
+            pickle = dumps((self.__class__.__name__, dict(self._data)))
+            self.__id__ = sha1(pickle).hexdigest()
+        return self.__id__
