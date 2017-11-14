@@ -26,7 +26,8 @@ class TestStationsModel(TestCase):
                      "Lanes": []}]
         assert self.model.payload == expected
 
-    def test_validation(self):
+    @staticmethod
+    def test_validation():
         data = {"BoardId": 100000000,
                 "Stations": [{"Name": "Station 1", "Lanes": [100001003]},
                              {"Name": "Station 2", "Lanes": [100001003]}]}

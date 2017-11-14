@@ -8,5 +8,5 @@ cache = FakeStrictRedis()
 log = getLogger("tornado.api")
 logging = "debug"
 address = "127.0.0.1"
-port = 8080
+port = 5000
 debug = True

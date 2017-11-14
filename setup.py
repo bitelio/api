@@ -17,5 +17,4 @@ setup(name='api',
       author='Guillermo Guirao Aguilar',
       author_email='info@bitelio.com',
       url='https://github.com/bitelio/api',
-      install_requires=['schematics', 'tornado', 'pymongo', 'raven'],
       classifiers=['Programming Language :: Python :: 3.6'])

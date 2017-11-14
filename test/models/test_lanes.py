@@ -4,7 +4,8 @@ from api.models.lanes import LanesModel
 
 
 class TestLanesModel(TestCase):
-    def test_query(self):
+    @staticmethod
+    def test_query():
         query = {"BoardId": 100000000, "Stage": "wip"}
         lanes = LanesModel(query)
         assert lanes.query == query
