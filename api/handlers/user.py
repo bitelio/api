@@ -14,7 +14,7 @@ class UserHandler(BaseHandler):
                            "Enabled": document["Enabled"],
                            "Role": self.roles[document["Role"]]})
         if boards:
-            fields = ["Id", "FullName", "UserName"]
+            fields = ["Id", "FullName", "UserName", "GravatarLink"]
             user = {key: document[key] for key in fields}
             user["Boards"] = boards
             self.write(user)
