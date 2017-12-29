@@ -4,7 +4,7 @@ from . import APITestCase
 
 
 class TestLanesHandler(APITestCase):
-    url = "/board/lanes"
+    url = "/api/board/lanes"
 
     def test_get_lanes(self):
         response = self.post({"BoardId": 100000000})

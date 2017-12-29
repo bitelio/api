@@ -15,7 +15,7 @@ def route(handler):
     while parent.__name__ is not "BaseHandler":
         url = f"/{parent.__name__.lower()[:-7]}" + url
         parent = parent.__bases__[0]
-    routes.append((url, handler))
+    routes.append((f"/api{url}", handler))
     return handler
 
 

@@ -4,7 +4,7 @@ from . import APITestCase, restore
 
 
 class TestStationsHandler(APITestCase):
-    url = "/board/stations"
+    url = "/api/board/stations"
 
     def test_get_stations(self):
         response = self.post({"BoardId": 100000000})

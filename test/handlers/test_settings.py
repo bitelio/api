@@ -4,7 +4,7 @@ from . import APITestCase
 
 
 class TestSettingsHandler(APITestCase):
-    url = "/board/settings"
+    url = "/api/board/settings"
 
     def test_get_settings(self):
         response = self.post({"BoardId": 100000000})

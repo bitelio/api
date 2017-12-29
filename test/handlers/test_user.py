@@ -4,7 +4,7 @@ from . import APITestCase
 
 
 class TestUserHandler(APITestCase):
-    url = "/user"
+    url = "/api/user"
 
     def test_get_user(self):
         response = self.post({"UserName": "User1@example.org"})

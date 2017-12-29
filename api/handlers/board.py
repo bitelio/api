@@ -1,4 +1,5 @@
 from json import loads
+from datetime import datetime
 
 from api import route
 from api.handlers import BaseHandler
@@ -27,6 +28,13 @@ class BoardHandler(BaseHandler):
             pipeline.set(self.model.id, b"".join(self._write_buffer))
             pipeline.set(self.model["BoardId"], self.model.id)
             pipeline.execute()
+
+    def on_finish(self):
+        if self.request.method == 'PUT':
+            event = {"data": self.model.payload,
+                     "date": datetime.today(),
+                     "path": self.request.path}
+            self.db.history.insert_one(event)
 
     async def exists(self):
         cached = self.cache.get("boards")
