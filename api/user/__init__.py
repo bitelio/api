@@ -9,7 +9,8 @@ class UserModel(BaseModel):
 
     @property
     def query(self):
-        return [{"$match": {"UserName": self.UserName.lower()}},
+        return [{"$match": {"UserName": self.UserName.lower(),
+                            "Password": {"$exists": False}}},
                 {"$lookup": {"from": "boards", "localField": "BoardId",
                              "foreignField": "Id", "as": "Board"}}]
 

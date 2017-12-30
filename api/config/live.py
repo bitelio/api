@@ -10,3 +10,5 @@ log = getLogger("tornado.api")
 port = 80
 compress_response = True
 cookie_secret = getenv("API_SECRET")
+authenticate = True
+session = 60 * 60 * 24 * 30

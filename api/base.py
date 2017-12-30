@@ -16,12 +16,25 @@ class BaseHandler(RequestHandler):
         self.cache = self.settings["cache"]
 
     def prepare(self):
+        if self.settings.get("authenticate"):
+            self.authenticate()
         try:
             method = self.request.method
             self.model = self.schema(self.body, method=method, validate=True)
         except DataError as error:
             self.write_error(400, message=str(error))
             self.log.warning(str(error))
+
+    def authenticate(self):
+        token = self.get_secure_cookie("token")
+        user = self.cache.get(token)
+        if user:
+            self.user = loads(user)
+            board = self.user["Boards"][0]  # TODO: put boards in cache
+            if not board or self.request.method == "PUT" and board["Role"] < 4:
+                self.write_error(401, "Not permitted")
+        else:
+            self.write_error(401, "Not authenticated")
 
     def write(self, chunk):
         if isinstance(chunk, (dict, list)):
