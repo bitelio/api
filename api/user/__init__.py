@@ -1,5 +1,17 @@
+from schematics.types.net import EmailType
+
 from api import route
-from api.handlers import BaseHandler
+from api.base import BaseHandler, BaseModel
+
+
+class UserModel(BaseModel):
+    UserName = EmailType(required=True)
+
+    @property
+    def query(self):
+        return [{"$match": {"UserName": self.UserName.lower()}},
+                {"$lookup": {"from": "boards", "localField": "BoardId",
+                             "foreignField": "Id", "as": "Board"}}]
 
 
 @route

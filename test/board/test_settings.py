@@ -1,6 +1,6 @@
 from json import loads
 
-from . import APITestCase
+from test import APITestCase
 
 
 class TestSettingsHandler(APITestCase):

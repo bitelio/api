@@ -1,9 +1,10 @@
 from json import loads
-from bson.json_util import dumps
+from pickle import dumps
+from hashlib import sha1
 from tornado.web import RequestHandler
+from bson.json_util import dumps as jsonify
 from schematics.exceptions import DataError
-
-from api import models
+from schematics.models import ModelMeta, Model
 
 
 class BaseHandler(RequestHandler):
@@ -24,7 +25,7 @@ class BaseHandler(RequestHandler):
 
     def write(self, chunk):
         if isinstance(chunk, (dict, list)):
-            chunk = dumps(chunk).encode("utf-8")
+            chunk = jsonify(chunk).encode("utf-8")
         self.set_header("Content-Type", "application/json; charset=UTF-8")
         self._write_buffer.append(chunk)
 
@@ -37,11 +38,27 @@ class BaseHandler(RequestHandler):
     def body(self):
         return loads(self.request.body or "{}")
 
+
+class MetaModel(ModelMeta):
+    def __call__(cls, *args, **kwargs):
+        if "method" in kwargs:
+            method = kwargs.pop("method")
+            mixin = getattr(cls, method, type(method, (object,), {}))
+            name = f"{cls.__name__} ({mixin.__name__})"
+            cls = type(name, (mixin, cls), dict(cls.__dict__))
+        return type.__call__(cls, *args, **kwargs)
+
+
+class BaseModel(Model, metaclass=MetaModel):
+    class Options:
+        serialize_when_none = False
+
     @property
-    def schema(self):
-        name = self.__class__.__name__[:-7]
-        module = getattr(models, name.lower())
-        return getattr(module, f"{name}Model")
+    def id(self):
+        if not hasattr(self, "__id__"):
+            pickle = dumps((self.__class__.__name__, dict(self._data)))
+            self.__id__ = sha1(pickle).hexdigest()
+        return self.__id__
 
 
 class NotFoundHandler(BaseHandler):

@@ -1,6 +1,16 @@
 from json import loads
+from unittest import TestCase
 
-from . import APITestCase
+from test import APITestCase
+from api.board.lanes import LanesModel
+
+
+class TestLanesModel(TestCase):
+    @staticmethod
+    def test_query():
+        query = {"BoardId": 100000000, "Stage": "wip"}
+        lanes = LanesModel(query)
+        assert lanes.query == query
 
 
 class TestLanesHandler(APITestCase):
