@@ -48,7 +48,7 @@ class BaseHandler(RequestHandler):
         self.finish()
 
     @property
-    def body(self):
+    def body(self) -> str:
         return loads(self.request.body or "{}")
 
 

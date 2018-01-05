@@ -5,14 +5,15 @@ __version__ = "0.0.1"
 
 from re import match
 from os import path, listdir
+from typing import List, Tuple
 from importlib import import_module
 from tornado import options
 from tornado.web import Application
 
-from api.base import NotFoundHandler
+from api.base import BaseHandler, NotFoundHandler
 
 
-def route(handler):
+def route(handler: BaseHandler) -> BaseHandler:
     name = handler.__name__[:-7]
     module = import_module(handler.__module__)
     url = f"/{name.lower()}"
@@ -25,7 +26,7 @@ def route(handler):
     return handler
 
 
-def start(env):
+def start(env: str) -> Application:
     modules = ["auth", "user", "board"]
     dirname = path.dirname(__file__)
     for module in modules:
@@ -41,6 +42,7 @@ def start(env):
 
 
 options.define("db", group="application", type=object)
+options.define("sg", group="application", type=object)
 options.define("log", group="application", type=object)
 options.define("cache", group="application", type=object)
 options.define("debug", group="application", type=bool)
@@ -49,4 +51,4 @@ options.define("authenticate", group="application", type=bool)
 options.define("cookie_secret", group="application", type=str)
 options.define("address", group="server", type=str)
 options.define("port", group="server", type=int)
-routes = []
+routes: List[Tuple[str, BaseHandler]] = []
