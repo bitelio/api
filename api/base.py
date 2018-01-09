@@ -12,6 +12,7 @@ class BaseHandler(RequestHandler):
 
     def initialize(self):
         self.db = self.settings["db"]
+        self.sg = self.settings.get("sg")
         self.log = self.settings["log"]
         self.cache = self.settings["cache"]
 

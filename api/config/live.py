@@ -1,10 +1,12 @@
 from sys import getenv
 from motor.motor_tornado import MotorClient
 from redis import StrictRedis
+from sendgrid import SendGridAPIClient
 from logging import getLogger
 
 
 db = MotorClient("mongo", tz_aware=True)["kanban"]
+sg = SendGridAPIClient(apikey=getenv('SENDGRID'))
 cache = StrictRedis("redis")
 log = getLogger("tornado.api")
 port = 80

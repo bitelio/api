@@ -14,4 +14,4 @@ class UsersModel(BoardModel):
 class UsersHandler(BoardHandler):
     async def load(self):
         cursor = self.db.users.find(self.model.query, self.model.projection)
-        return await cursor.to_list(100)
+        return await cursor.to_list(None)

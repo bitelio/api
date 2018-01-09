@@ -46,7 +46,7 @@ class StationsModel(BoardModel):
 class StationsHandler(BoardHandler):
     async def load(self):
         cursor = self.db.stations.find(self.model.query, self.model.projection)
-        return await cursor.to_list(100)
+        return await cursor.to_list(None)
 
     async def put(self):
         payload = self.model.payload

@@ -7,7 +7,8 @@ from api.board import BoardHandler, BoardModel
 class LanesModel(BoardModel):
     Stage = StringType(choices=["backlog", "wip", "archive"])
 
-    fields = ["Id", "Title", "Index", "Width", "Orientation", "ChildLaneIds"]
+    fields = ["Id", "Title", "Index", "Width", "Orientation",
+              "ChildLaneIds", "ParentLaneId"]
 
     @property
     def query(self):
@@ -18,4 +19,4 @@ class LanesModel(BoardModel):
 class LanesHandler(BoardHandler):
     async def load(self):
         cursor = self.db.lanes.find(self.model.query, self.model.projection)
-        return await cursor.to_list(100)
+        return await cursor.to_list(None)
