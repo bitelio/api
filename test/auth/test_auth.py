@@ -7,7 +7,7 @@ from api.auth import AuthModel
 
 class TestAuthModel(TestCase):
     @staticmethod
-    def test_query(self):
+    def test_query():
         auth = AuthModel({"UserName": "User@example.org ", "Password": "xxx"})
         expected = {"UserName": "user@example.org",
                     "Password": {"$exists": True}}

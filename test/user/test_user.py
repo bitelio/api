@@ -7,7 +7,7 @@ from api.user import UserModel
 
 class TestUserModel(TestCase):
     @staticmethod
-    def test_query(self):
+    def test_query():
         user = UserModel({"UserName": "User@example.org"})
         expected = [{"$match": {"UserName": "user@example.org",
                                 "Password": {"$exists": False}}},
