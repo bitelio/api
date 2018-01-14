@@ -43,7 +43,7 @@ class BoardModel(BaseModel):
 class BoardHandler(BaseHandler):
     async def prepare(self):
         super().prepare()
-        if not await self.exists():
+        if not self._finished and not await self.exists():
             self.write_error(404, f"Board {self.model.BoardId} not found")
 
     async def load(self):
@@ -54,8 +54,8 @@ class BoardHandler(BaseHandler):
     async def post(self):
         cached = self.cache.get(self.model.id)
         if cached:
-            self.log.debug("Cached response")
             self.write(cached)
+            self.request.cached = True
         else:
             self.write(await self.load())
             pipeline = self.cache.pipeline()
@@ -78,3 +78,7 @@ class BoardHandler(BaseHandler):
             boards = await self.db.boards.find().distinct("Id")
             self.cache.set("boards", boards)
         return self.model.BoardId in boards
+
+    def _request_summary(self):
+        cached = " cached" if getattr(self.request, "cached", False) else " -"
+        return super()._request_summary() + cached

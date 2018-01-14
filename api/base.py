@@ -52,6 +52,11 @@ class BaseHandler(RequestHandler):
     def body(self) -> str:
         return loads(self.request.body or "{}")
 
+    def _request_summary(self):
+        req = self.request
+        board_id = getattr(getattr(self, "model", object), "BoardId", "-")
+        return f"{req.method} {req.uri} {board_id} {req.remote_ip}"
+
 
 class MetaModel(ModelMeta):
     def __call__(cls, *args, **kwargs):
