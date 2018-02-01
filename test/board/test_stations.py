@@ -58,8 +58,8 @@ class TestStationsHandler(APITestCase):
     def test_put_stations(self):
         payload = {"BoardId": 200000000, "Stations": [{"Name": "Test"}]}
         response = self.put(payload)
-        expected = [{"Name": "Test", "Position": 0, "BoardId": 200000000,
-                     "Card": 0.0, "Size": 0.0, "Phase": None, "Lanes": []}]
+        expected = [{"Name": "Test", "Card": 0.0, "Size": 0.0,
+                     "Phase": None, "Lanes": []}]
         assert response.code == 200
         assert loads(response.body) == expected
         response = self.put({"BoardId": 200000000, "Stations": []})

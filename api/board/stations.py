@@ -53,4 +53,5 @@ class StationsHandler(BoardHandler):
         await self.db.stations.remove(self.model.query)
         if payload:
             await self.db.stations.insert_many(deepcopy(payload))
-        self.write(payload)
+        self.write(self.model.to_native()["Stations"])
+        self.cache.set(self.model.id, b"".join(self._write_buffer))

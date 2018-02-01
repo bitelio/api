@@ -75,8 +75,10 @@ class BaseModel(Model, metaclass=MetaModel):
     @property
     def id(self):
         if not hasattr(self, "__id__"):
-            pickle = dumps((self.__class__.__name__, dict(self._data)))
-            self.__id__ = sha1(pickle).hexdigest()
+            of = list(self.PUT.__dict__.keys()) if hasattr(self, 'PUT') else []
+            dt = {key: val for key, val in self._data.items() if key not in of}
+            name = self.__class__.__name__.split()[0]
+            self.__id__ = sha1(dumps((name, dt))).hexdigest()
         return self.__id__
 
 
