@@ -1,8 +1,8 @@
 from api import route
-from api.board import BoardHandler, BoardModel
+from api.board import BoardHandler, BaseBoardModel
 
 
-class SettingsModel(BoardModel):
+class SettingsModel(BaseBoardModel):
     fields = ["OfficeHours", "Holidays", "Timezone", "Ignore"]
 
     @property

@@ -5,7 +5,7 @@ from schematics.types.compound import ListType, ModelType
 from schematics.exceptions import DataError
 
 from api import route
-from api.board import BoardHandler, BoardModel
+from api.board import BoardHandler, BaseBoardModel
 
 
 class StationModel(Model):
@@ -16,7 +16,7 @@ class StationModel(Model):
     Size = FloatType(default=0, min_value=0)
 
 
-class StationsModel(BoardModel):
+class StationsModel(BaseBoardModel):
     fields = ["Name", "Card", "Size", "Lanes", "Phase"]
 
     class PUT(Model):
@@ -54,4 +54,6 @@ class StationsHandler(BoardHandler):
         if payload:
             await self.db.stations.insert_many(deepcopy(payload))
         self.write(self.model.to_native()["Stations"])
-        self.cache.set(self.model.id, b"".join(self._write_buffer))
+        keys = self.cache.keys(f"{self.model.BoardId}:reports:*")
+        self.cache.delete(keys)
+        self.cache.set(self.model.key, b"".join(self._write_buffer))

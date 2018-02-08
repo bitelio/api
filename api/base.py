@@ -3,6 +3,7 @@ from pickle import dumps
 from hashlib import sha1
 from tornado.web import RequestHandler
 from bson.json_util import dumps as jsonify
+from cached_property import cached_property
 from schematics.exceptions import DataError
 from schematics.models import ModelMeta, Model
 
@@ -33,9 +34,9 @@ class BaseHandler(RequestHandler):
             self.user = loads(user)
             board = self.user["Boards"][0]  # TODO: put boards in cache
             if not board or self.request.method == "PUT" and board["Role"] < 4:
-                self.write_error(401, "Not permitted")
+                self.write_error(403, "Forbidden")
         else:
-            self.write_error(401, "Not authenticated")
+            self.write_error(401, "Unauthorized")
 
     def write(self, chunk):
         if isinstance(chunk, (dict, list)):
@@ -63,8 +64,7 @@ class MetaModel(ModelMeta):
         if "method" in kwargs:
             method = kwargs.pop("method")
             mixin = getattr(cls, method, type(method, (object,), {}))
-            name = f"{cls.__name__} ({mixin.__name__})"
-            cls = type(name, (mixin, cls), dict(cls.__dict__))
+            cls = type(cls.__name__, (mixin, cls), dict(cls.__dict__))
         return type.__call__(cls, *args, **kwargs)
 
 
@@ -72,14 +72,11 @@ class BaseModel(Model, metaclass=MetaModel):
     class Options:
         serialize_when_none = False
 
-    @property
+    @cached_property
     def id(self):
-        if not hasattr(self, "__id__"):
-            of = list(self.PUT.__dict__.keys()) if hasattr(self, 'PUT') else []
-            dt = {key: val for key, val in self._data.items() if key not in of}
-            name = self.__class__.__name__.split()[0]
-            self.__id__ = sha1(dumps((name, dt))).hexdigest()
-        return self.__id__
+        omit = list(self.PUT.__dict__.keys()) if hasattr(self, 'PUT') else []
+        data = {key: val for key, val in self._data.items() if key not in omit}
+        return sha1(dumps((self.name, data))).hexdigest()
 
 
 class NotFoundHandler(BaseHandler):

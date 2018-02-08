@@ -1,4 +1,3 @@
-from json import loads
 from datetime import datetime
 from schematics.types import IntType
 
@@ -6,15 +5,15 @@ from api import route
 from api.base import BaseHandler, BaseModel
 
 
-class BoardModel(BaseModel):
+class BaseBoardModel(BaseModel):
     BoardId = IntType(required=True)
 
-    fields = ["Id", "Title", "AvailableTags",
-              {"CardTypes": ["Id", "Name", "Ignore"],
-               "ClassesOfService": ["Id", "Title", "Ignore"]}]
+    @property
+    def query(self) -> dict:
+        return self.to_native()
 
     @property
-    def projection(self):
+    def projection(self) -> dict:
         fields = {"_id": 0}
         for field in self.fields:
             if isinstance(field, str):
@@ -26,6 +25,16 @@ class BoardModel(BaseModel):
             else:
                 raise ValueError("Invalid fields format")
         return fields
+
+    @property
+    def key(self):
+        return f'{self.BoardId}:{self.name}:{self.id}'
+
+
+class BoardModel(BaseBoardModel):
+    fields = ["Id", "Title", "AvailableTags",
+              {"CardTypes": ["Id", "Name", "Ignore"],
+               "ClassesOfService": ["Id", "Title", "Ignore"]}]
 
     @property
     def query(self):
@@ -52,16 +61,12 @@ class BoardHandler(BaseHandler):
         return cursor.next_object()
 
     async def post(self):
-        cached = self.cache.get(self.model.id)
-        if cached:
-            self.write(cached)
+        if self.cache.exists(self.model.id):
+            self.write(self.cache.get(self.model.id))
             self.request.cached = True
         else:
             self.write(await self.load())
-            pipeline = self.cache.pipeline()
-            pipeline.set(self.model.id, b"".join(self._write_buffer))
-            pipeline.set(self.model["BoardId"], self.model.id)
-            pipeline.execute()
+            self.cache.set(self.model.key, b"".join(self._write_buffer))
 
     def on_finish(self):
         if self.request.method == 'PUT':
@@ -71,13 +76,11 @@ class BoardHandler(BaseHandler):
             self.db.history.insert_one(event)
 
     async def exists(self):
-        cached = self.cache.get("boards")
-        if cached:
-            boards = loads(cached.decode())
-        else:
-            boards = await self.db.boards.find().distinct("Id")
-            self.cache.set("boards", boards)
-        return self.model.BoardId in boards
+        if not self.cache.exists(self.model.BoardId):
+            if not await self.db.boards.find_one({"Id": self.model.BoardId}):
+                return False
+            self.cache.set(self.model.BoardId, True)
+        return True
 
     def _request_summary(self):
         cached = " cached" if getattr(self.request, "cached", False) else " -"

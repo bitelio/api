@@ -2,7 +2,7 @@ from json import loads
 from unittest import TestCase
 
 from test import APITestCase
-from api.board.lanes import LanesModel, LanesHandler
+from api.board.lanes import LanesModel
 
 
 class TestLanesModel(TestCase):

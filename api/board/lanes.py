@@ -1,15 +1,9 @@
-from schematics.types import StringType
-
 from api import route
-from api.board import BoardHandler, BoardModel
+from api.board import BoardHandler, BaseBoardModel
 
 
-class LanesModel(BoardModel):
+class LanesModel(BaseBoardModel):
     fields = ["Id", "Title", "Top", "Width", "Height", "Left", "ChildLaneIds"]
-
-    @property
-    def query(self):
-        return self.to_native()
 
 
 @route

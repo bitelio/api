@@ -1,13 +1,9 @@
 from api import route
-from api.board import BoardHandler, BoardModel
+from api.board import BoardHandler, BaseBoardModel
 
 
-class UsersModel(BoardModel):
+class UsersModel(BaseBoardModel):
     fields = ["Id", "UserName", "FullName", "Role"]
-
-    @property
-    def query(self):
-        return self.to_native()
 
 
 @route

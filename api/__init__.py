@@ -14,15 +14,17 @@ from api.base import BaseHandler, NotFoundHandler
 
 
 def route(handler: BaseHandler) -> BaseHandler:
-    name = handler.__name__[:-7]
+    handler.name = handler.__name__[:-7]
     module = import_module(handler.__module__)
-    url = f"/{name.lower()}"
-    parent = handler.__bases__[0]
+    url = f"/{handler.name.lower()}"
+    parent = handler.__bases__[-1]
     while parent.__name__ is not "BaseHandler":
         url = f"/{parent.__name__.lower()[:-7]}" + url
-        parent = parent.__bases__[0]
+        parent = parent.__bases__[-1]
     routes.append((f"/api{url}", handler))
-    handler.schema = getattr(module, f"{name}Model")
+    model = getattr(module, f"{handler.name}Model")
+    model.name = handler.name
+    handler.schema = model
     return handler
 
 
