@@ -1,6 +1,5 @@
 from schematics.types import StringType
 
-from api import route
 from api.board import BoardHandler, BoardModel
 
 
@@ -12,7 +11,6 @@ class LanesModel(BoardModel):
         return self.to_native()
 
 
-@route
 class LanesHandler(BoardHandler):
     async def load(self):
         cursor = self.db.lanes.find(self.model.query, self.model.projection)

@@ -1,6 +1,5 @@
 from schematics.types.net import EmailType
 
-from api import route
 from api.base import BaseHandler, BaseModel
 
 
@@ -15,7 +14,6 @@ class UserModel(BaseModel):
                              "foreignField": "Id", "as": "Board"}}]
 
 
-@route
 class UserHandler(BaseHandler):
     roles = {1: "reader", 2: "user", 3: "manager", 4: "administrator"}
 

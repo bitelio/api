@@ -4,7 +4,6 @@ from schematics.types import IntType, FloatType, StringType
 from schematics.types.compound import ListType, ModelType
 from schematics.exceptions import DataError
 
-from api import route
 from api.board import BoardHandler, BoardModel
 
 
@@ -42,7 +41,6 @@ class StationsModel(BoardModel):
         return stations
 
 
-@route
 class StationsHandler(BoardHandler):
     async def load(self):
         cursor = self.db.stations.find(self.model.query, self.model.projection)

@@ -20,6 +20,7 @@ lib64/
 parts/
 sdist/
 var/
+.mypy_cache/
 *.egg-info/
 .installed.cfg
 *.egg

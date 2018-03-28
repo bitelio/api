@@ -2,7 +2,6 @@ from json import loads
 from datetime import datetime
 from schematics.types import IntType
 
-from api import route
 from api.base import BaseHandler, BaseModel
 
 
@@ -39,7 +38,6 @@ class BoardModel(BaseModel):
                 {"$project": self.projection}]
 
 
-@route
 class BoardHandler(BaseHandler):
     async def prepare(self):
         super().prepare()

@@ -2,7 +2,6 @@ from secrets import token_hex
 from schematics.types import StringType
 from passlib.context import CryptContext
 
-from api import route
 from api.base import BaseHandler, BaseModel
 
 
@@ -16,7 +15,6 @@ class AuthModel(BaseModel):
                 "Password": {"$exists": True}}
 
 
-@route
 class AuthHandler(BaseHandler):
     # TODO: update user from cache when changed on kanban
     # TODO: remove open sessions when changing password

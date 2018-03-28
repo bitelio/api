@@ -1,4 +1,3 @@
-from api import route
 from api.board import BoardHandler, BoardModel
 
 
@@ -10,7 +9,6 @@ class UsersModel(BoardModel):
         return self.to_native()
 
 
-@route
 class UsersHandler(BoardHandler):
     async def load(self):
         cursor = self.db.users.find(self.model.query, self.model.projection)

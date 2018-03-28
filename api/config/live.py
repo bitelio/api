@@ -1,4 +1,4 @@
-from sys import getenv
+from os import getenv
 from motor.motor_tornado import MotorClient
 from redis import StrictRedis
 from sendgrid import SendGridAPIClient
@@ -11,6 +11,5 @@ cache = StrictRedis("redis")
 log = getLogger("tornado.api")
 port = 80
 compress_response = True
-cookie_secret = getenv("API_SECRET")
 authenticate = True
 session = 60 * 60 * 24 * 30
