@@ -1,10 +1,11 @@
+argon2_cffi
 blinker
 hiredis
 motor
+passlib
 pytz
 pyyaml
 redis
 schematics
+structlog
 tornado
-passlib
-argon2_cffi
