@@ -3,8 +3,8 @@ from fakeredis import FakeStrictRedis
 from logging import getLogger
 
 
-db = MotorClient(tz_aware=True)["kanban"]
-cache = FakeStrictRedis()
+mongo = MotorClient(tz_aware=True)["kanban"]
+redis = FakeStrictRedis()
 log = getLogger("tornado.api")
 logging = "debug"
 address = "127.0.0.1"

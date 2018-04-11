@@ -6,21 +6,20 @@ __version__ = "0.0.1"
 from tornado import options
 from tornado.web import Application
 
-from api.base import NotFoundHandler
-from api.config import routes
+from api import handlers
 
 
 def start(env: str) -> Application:
     options.parse_config_file(f"api/config/{env}.py")
     settings = options.options.group_dict("application")
-    settings["default_handler_class"] = NotFoundHandler
-    return Application(routes, **settings)
+    settings["default_handler_class"] = handlers.NotFoundHandler
+    return Application(handlers.routes, **settings)
 
 
-options.define("db", group="application", type=object)
 options.define("sg", group="application", type=object)
 options.define("log", group="application", type=object)
-options.define("cache", group="application", type=object)
+options.define("mongo", group="application", type=object)
+options.define("redis", group="application", type=object)
 options.define("debug", group="application", type=bool)
 options.define("session", group="application", type=int)
 options.define("authenticate", group="application", type=bool)

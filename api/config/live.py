@@ -5,9 +5,9 @@ from sendgrid import SendGridAPIClient
 from logging import getLogger
 
 
-db = MotorClient("mongo", tz_aware=True)["kanban"]
+mongo = MotorClient("mongo", tz_aware=True)["kanban"]
+redis = StrictRedis("redis")
 sg = SendGridAPIClient(apikey=getenv('SENDGRID'))
-cache = StrictRedis("redis")
 log = getLogger("tornado.api")
 port = 80
 compress_response = True

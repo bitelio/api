@@ -3,7 +3,7 @@ from fakeredis import FakeStrictRedis
 from logging import getLogger
 
 
-db = MotorClient(tz_aware=True)["test"]
-cache = FakeStrictRedis()
+mongo = MotorClient(tz_aware=True)["test"]
+redis = FakeStrictRedis()
 log = getLogger("tornado.api")
 port = 8008

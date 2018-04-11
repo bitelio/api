@@ -77,8 +77,3 @@ class BaseModel(Model, metaclass=MetaModel):
         omit = list(self.PUT.__dict__.keys()) if hasattr(self, 'PUT') else []
         data = {key: val for key, val in self._data.items() if key not in omit}
         return sha1(dumps((self.name, data))).hexdigest()
-
-
-class NotFoundHandler(BaseHandler):
-    def prepare(self):
-        self.write_error(404, "Invalid URL")
