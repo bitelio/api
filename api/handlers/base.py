@@ -18,6 +18,7 @@ class BaseHandler(RequestHandler):
         self._write_buffer.append(chunk)
 
     def write_error(self, status_code=None, message=None, exc_info=None):
+        self.log.warning(message, status_code=status_code)
         self.set_status(status_code or self._status_code)
         self.write({"error": {"code": status_code, "message": message}})
         self.finish()

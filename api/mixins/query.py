@@ -1,11 +1,14 @@
-from abc import ABCMeta, abstractmethod
+class MetaQuery(type):
+    def __new__(cls, name, bases, body):
+        instance = super().__new__(cls, name, bases, body)
+        if "Mixin" not in name:
+            for attr in ("collection", "response", "query"):
+                if not hasattr(instance, attr):
+                    raise TypeError(f"Attribute {attr} missing from {name}")
+        return instance
 
 
-class QueryMixin(metaclass=ABCMeta):
-    @abstractmethod
-    def query(self):
-        return NotImplemented
-
+class QueryMixin(metaclass=MetaQuery):
     @property
     def db(self):
         return self.mongo[self.collection]

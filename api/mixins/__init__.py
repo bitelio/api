@@ -5,6 +5,7 @@ from .collection import CollectionMixin
 from .document import DocumentMixin
 from .editable import EditableMixin
 from .post import PostMixin
+from .token import TokenMixin
 
 
 __all__ = [
@@ -14,5 +15,6 @@ __all__ = [
     "CollectionMixin",
     "DocumentMixin",
     "EditableMixin",
-    "PostMixin"
+    "PostMixin",
+    "TokenMixin"
 ]

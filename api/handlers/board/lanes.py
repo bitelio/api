@@ -1,4 +1,4 @@
-from api.handlers.base import BaseHandler
+from api.handlers import BaseHandler
 from api.mixins import BoardMixin, CollectionMixin
 
 

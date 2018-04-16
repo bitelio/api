@@ -3,6 +3,7 @@ __email__ = "info@bitelio.com"
 __version__ = "0.0.1"
 
 
+from os.path import dirname
 from tornado import options
 from tornado.web import Application
 
@@ -10,7 +11,7 @@ from api import handlers
 
 
 def start(env: str) -> Application:
-    options.parse_config_file(f"api/config/{env}.py")
+    options.parse_config_file(f"{dirname(__file__)}/config/{env}.py")
     settings = options.options.group_dict("application")
     settings["default_handler_class"] = handlers.NotFoundHandler
     return Application(handlers.routes, **settings)

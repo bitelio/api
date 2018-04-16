@@ -1,7 +1,12 @@
-from . import auth, base, board
+from .base import BaseHandler
+from .user import UserHandler
+from .login import LoginHandler
+from .logout import LogoutHandler
+from .password import PasswordHandler
+from . import board
 
 
-class NotFoundHandler(base.BaseHandler):
+class NotFoundHandler(BaseHandler):
     def prepare(self):
         self.write_error(404, "Invalid URL")
 
@@ -20,7 +25,10 @@ def configure(mapper, prefix=""):
 
 routes = configure({
     "api": {
-        "(?P<board_id>\d{9})": board.routes,
-        "auth": auth.routes
+        "user": UserHandler,
+        "login": LoginHandler,
+        "logout": LogoutHandler,
+        "password": PasswordHandler,
+        "(?P<board_id>\d+)": board.routes
     }
 })
