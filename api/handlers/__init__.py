@@ -11,6 +11,18 @@ class NotFoundHandler(BaseHandler):
         self.write_error(404, "Invalid URL")
 
 
+def logger(handler):
+    status_code = handler.get_status()
+    if status_code < 400:
+        log = handler.log.info
+    elif status_code < 500:
+        log = handler.log.warning
+    else:
+        log = handler.log.error
+    time = round(1000 * handler.request.request_time(), 2)
+    log(getattr(handler, "message", ""), status=status_code, time=time)
+
+
 def configure(mapper, prefix=""):
     urls = []
     for key, value in mapper.items():
