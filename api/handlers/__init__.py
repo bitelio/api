@@ -6,6 +6,18 @@ from .password import PasswordHandler
 from . import board
 
 
+responses = {
+    200: "OK",
+    201: "Created",
+    400: "Bad request",
+    401: "Unauthorized",
+    403: "Forbidden",
+    404: "Not found",
+    405: "Method not allowed",
+    500: "Internal server error"
+}
+
+
 class NotFoundHandler(BaseHandler):
     def prepare(self):
         self.write_error(404, "Invalid URL")
@@ -13,6 +25,8 @@ class NotFoundHandler(BaseHandler):
 
 def logger(handler):
     status_code = handler.get_status()
+    if not handler.log._context.get("event"):
+        handler.log = handler.log.bind(event=responses.get(status_code))
     if status_code < 400:
         log = handler.log.info
     elif status_code < 500:
@@ -20,7 +34,7 @@ def logger(handler):
     else:
         log = handler.log.error
     time = round(1000 * handler.request.request_time(), 2)
-    log(getattr(handler, "message", ""), status=status_code, time=time)
+    log(status=status_code, time=time)
 
 
 def configure(mapper, prefix=""):

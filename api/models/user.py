@@ -22,10 +22,10 @@ class PasswordModel(Model):
             raise ValidationError(msg)
         return value
 
-    def hash(self):
+    def hash(self) -> str:
         return argon2.hash(self.Password)
 
-    def verify(self, password):
+    def verify(self, password: str) -> bool:
         return argon2.verify(self.Password, password)
 
 
@@ -42,7 +42,7 @@ class UserModel(PasswordModel):
     Locale = StringType(choices=["en", "de"], default="en")
     Subscriptions = ModelType(Subscriptions)
 
-    def to_native(self, *args, **kwargs):
+    def to_native(self, *args, **kwargs) -> dict:
         data = super().to_native(*args, **kwargs)
         if "Password" in data:
             data["Password"] = self.hash()

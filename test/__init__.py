@@ -7,31 +7,28 @@ from tornado.testing import AsyncHTTPTestCase
 from api import start
 
 
-class APITestCase(AsyncHTTPTestCase):
+class BaseTestCase(AsyncHTTPTestCase):
     @staticmethod
     def get_app():
-        return start("test")
+        app = start("test")
+        cookie = '{"UserName": "user@example.org", "Boards": {"100000000": 4}}'
+        app.settings["redis"].set("session:xxx", cookie)
+        return app
 
-    def tearDown(self):
-        self._app.settings["cache"].flushdb()
-
-    def submit(self, method, body):
-        return self.fetch(self.url, method=method, body=dumps(body))
+    def get(self, url=None, **kwargs):
+        return self.fetch(url or self.url, **kwargs)
 
     def post(self, body):
-        return self.submit("POST", body)
-
-    def put(self, body):
-        return self.submit("PUT", body)
+        return self.get(self.url, method="POST", body=dumps(body))
 
 
 def restore(collection):
     def decorate(test):
         def wrapper(self, *args, **kwargs):
             result = test(self, *args, **kwargs)
-            db = self._app.settings["db"]
-            db.drop_collection(collection)
-            db[collection].insert_many(read(collection))
+            mongo = self._app.settings["mongo"]
+            mongo.drop_collection(collection)
+            mongo[collection].insert_many(read(collection))
             return result
         return wrapper
     return decorate

@@ -8,6 +8,6 @@ import test
 def seed():
     client = MongoClient("mongodb://localhost/test")
     client.drop_database("test")
-    db = client.get_default_database()
+    mongo = client.get_default_database()
     for collection in test.collections:
-        db[collection].insert_many(test.read(collection))
+        mongo[collection].insert_many(test.read(collection))

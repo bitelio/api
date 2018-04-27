@@ -5,7 +5,8 @@ from .post import PostMixin
 
 class EditableMixin(PostMixin):
     def on_finish(self):
-        event = {"data": self.payload,
-                 "date": datetime.today(),
-                 "path": self.request.path}
-        self.mongo.history.insert_one(event)
+        if self.request.method == "POST":
+            event = {"body": self.body,
+                     "date": datetime.today(),
+                     "path": self.request.path}
+            self.mongo.history.insert_one(event)

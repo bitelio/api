@@ -1,14 +1,17 @@
 from .auth import AuthMixin
+from tornado.web import Finish
 
 
 class BoardMixin(AuthMixin):
     def prepare(self):
-        self.board_id = self.path_args["board_id"]
-        if self.board_id not in self.user["Boards"]:
+        super().prepare()
+        board_id = self.path_kwargs.get("board_id")
+        if board_id not in self.user["Boards"]:
             self.write_error(403, "Forbidden")
+            raise Finish()
         else:
-            self.log = self.log.bind(board_id=self.board_id)
-            super().prepare()
+            self.board_id = int(board_id)
+            self.log = self.log.bind(board_id=board_id)
 
     @property
     def query(self):

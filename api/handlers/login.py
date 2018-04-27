@@ -11,8 +11,9 @@ class LoginHandler(PostMixin, TokenMixin, BaseHandler):
         user = await self.mongo.users.find_one(query)
         if user:
             self.log = self.log.bind(user=self.body.UserName)
-            if self.model.verify():
-                self.write({"token": await self.token()})
+            if self.body.verify(user["Password"]):
+                self.log = self.log.bind(event="Authenticated")
+                self.write({"token": await self.token(self.body.UserName)})
             else:
                 self.write_error(401, "Wrong password")
         else:

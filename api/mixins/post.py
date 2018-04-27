@@ -1,5 +1,5 @@
+from sys import exc_info
 from json import loads
-from tornado.web import Finish
 from schematics.exceptions import DataError
 
 
@@ -12,4 +12,6 @@ class PostMixin:
                 self.body = self.model(body, validate=True)
             except DataError as error:
                 self.write_error(400, str(error))
-                raise Finish()
+            except:
+                error = exc_info()[0].__name__
+                self.write_error(400, f"Invalid body format: {error}")
