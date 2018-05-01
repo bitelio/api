@@ -17,7 +17,7 @@ class PasswordModel(Model):
     Password = StringType(required=True)
 
     def validate_password(self, value):
-        if len(value) < 6:
+        if isinstance(value, str) and len(value) < 6:
             msg = "Your password must be at least 6 characters long"
             raise ValidationError(msg)
         return value
@@ -34,12 +34,14 @@ class TokenModel(Model):
 
 
 class Subscriptions(Model):
-    Alerts = BooleanType(default=False)
-    Updates = BooleanType(default=False)
+    Alerts = BooleanType()
+    Updates = BooleanType()
 
 
 class UserModel(PasswordModel):
     Locale = StringType(choices=["en", "de"], default="en")
+    Password = StringType()
+    Signed = BooleanType(choices=[True])
     Subscriptions = ModelType(Subscriptions)
 
     def to_native(self, *args, **kwargs) -> dict:
@@ -47,3 +49,6 @@ class UserModel(PasswordModel):
         if "Password" in data:
             data["Password"] = self.hash()
         return data
+
+    class Options:
+        serialize_when_none = False

@@ -11,7 +11,8 @@ class BaseTestCase(AsyncHTTPTestCase):
     @staticmethod
     def get_app():
         app = start("test")
-        cookie = '{"UserName": "user@example.org", "Boards": {"100000000": 4}}'
+        cookie = ('{"UserName": "user1@example.org",'
+                  '"Boards": {"100000000": "admnistrator"}}')
         app.settings["redis"].set("session:xxx", cookie)
         return app
 

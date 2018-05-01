@@ -1,5 +1,4 @@
 from test import BaseTestCase
-
 from test.mixins import AuthMixin
 
 
