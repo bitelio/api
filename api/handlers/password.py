@@ -11,6 +11,6 @@ class PasswordHandler(PostMixin, TokenMixin, BaseHandler):
         if user:
             data = {"Password": self.body.hash(), "Token": None}
             await self.mongo.users.update({"Token": self.body.Token}, data)
-            self.write({"token": await self.token()})
+            self.write({"token": await self.token(user["UserName"])})
         else:
             self.write_error(400)

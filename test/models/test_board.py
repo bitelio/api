@@ -5,22 +5,26 @@ from api.models.board import StationModel, StationsModel
 
 
 class TestStationModel:
-    def test_include_fields(self):
+    @staticmethod
+    def test_include_fields():
         data = {"Name": "Station", "Lanes": [100001001]}
         model = StationModel(data, validate=True).to_native()
         data.update({"Card": 0, "Size": 0, "Phase": None})
         assert model == data
 
-    def test_missing_name(self):
+    @staticmethod
+    def test_missing_name():
         with raises(DataError):
             StationModel({}, validate=True)
 
 
 class TestStationsModel:
-    def test_stations_model(self):
+    @staticmethod
+    def test_stations_model():
         StationsModel([], validate=True)
 
-    def test_duplicate_lanes(self):
+    @staticmethod
+    def test_duplicate_lanes():
         data = [{"Name": "Station", "Lanes": [1, 1]}]
         with raises(DataError):
             StationsModel(data, validate=True)

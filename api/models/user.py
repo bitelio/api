@@ -16,7 +16,8 @@ class UsernameModel(Model):
 class PasswordModel(Model):
     Password = StringType(required=True)
 
-    def validate_password(self, value):
+    @staticmethod
+    def validate_password(value):
         if isinstance(value, str) and len(value) < 6:
             msg = "Your password must be at least 6 characters long"
             raise ValidationError(msg)
