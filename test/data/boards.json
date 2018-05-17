@@ -3,12 +3,20 @@
     "Id": 100000000,
     "Title": "Board 100000000",
     "AvailableTags": "Tag1,Tag2",
-    "Version": 1000
+    "Version": 1000,
+    "Timezone": "Europe/Berlin",
+    "Update": true,
+    "OfficeHours": ["8:00", "16:00"],
+    "Holidays": ["2017-05-01"]
   },
   {
     "Id": 200000000,
     "Title": "Board 200000000",
     "AvailableTags": "",
-    "Version": 2000
+    "Version": 2000,
+    "Timezone": "America/Indianapolis",
+    "Update": true,
+    "OfficeHours": ["9:00", "17:30"],
+    "Holidays": []
   }
 ]

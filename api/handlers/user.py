@@ -8,6 +8,7 @@ class UserHandler(AuthMixin, PostMixin, BaseHandler):
     roles = {1: "reader", 2: "user", 3: "manager", 4: "administrator"}
 
     async def get(self):
+        self.log = self.log.bind(event=f"Reading user")
         user = {"Boards": []}
         query = [{"$match": {"UserName": self.user["UserName"]}},
                  {"$lookup": {"from": "boards", "localField": "BoardId",
@@ -26,8 +27,6 @@ class UserHandler(AuthMixin, PostMixin, BaseHandler):
                 del user["Board"]
         self.write(user)
 
-    async def post(self):
-        query = {"UserName": self.user["UserName"]}
-        data = {"$set": self.body.to_native()}
-        status = await self.mongo.users.update_one(query, data)
-        self.write({"message": status.raw_result})
+    @property
+    def query(self):
+        return {"UserName": self.user["UserName"]}

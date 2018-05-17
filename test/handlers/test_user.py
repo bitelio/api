@@ -4,14 +4,13 @@ from test import BaseTestCase, restore
 from test.mixins import AuthMixin
 
 
-class TestLogoutHandler(AuthMixin, BaseTestCase):
+class TestUserHandler(AuthMixin, BaseTestCase):
     url = "/api/user"
 
     def test_get_user(self):
         response = self.get()
         assert response.code == 200
         body = loads(response.body)
-        print(body)
         assert len(body["Boards"]) == 2
         assert "Password" not in body
 

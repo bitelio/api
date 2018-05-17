@@ -15,3 +15,11 @@ class PostMixin:
             except:
                 error = exc_info()[0].__name__
                 self.write_error(400, f"Invalid body format: {error}")
+
+    async def post(self):
+        data = {"$set": self.body.to_native()}
+        status = await self.mongo.users.update_one(self.query, data)
+        self.write({"message": status.raw_result})
+
+    def query(self):
+        raise NotImplemented
