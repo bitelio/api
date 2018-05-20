@@ -9,7 +9,7 @@ class StationsHandler(BoardMixin, PostMixin, CollectionMixin, BaseHandler):
     model = StationsModel
     response = ["Name", "Card", "Size", "Lanes", "Phase"]
 
-    async def post(self, board_id):
+    async def post(self, *args, **kwargs):
         body = self.body.to_native()
         await self.db.remove(self.query)
         await self.db.insert_many(deepcopy(body))

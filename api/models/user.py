@@ -44,6 +44,7 @@ class UserModel(PasswordModel, UsernameModel):
     Password = StringType()
     Signed = BooleanType(choices=[True])
     Subscriptions = ModelType(Subscriptions)
+    UserName = StringType()
     Token = StringType()
 
     def to_native(self, *args, **kwargs) -> dict:

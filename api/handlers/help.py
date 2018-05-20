@@ -15,7 +15,7 @@ class HelpHandler(PostMixin, BaseHandler):
         "recover": "95851851-5c66-4de4-b12a-8e4a81ccb966"
     }
 
-    async def post(self):
+    async def post(self, *args, **kwargs):
         username = self.body.UserName
         projection = {"_id": 0, "Password": 0}
         query = {"UserName": username, "Password": {"$exists": False}}

@@ -14,7 +14,7 @@ class PostMixin:
             except JSONDecodeError:
                 self.write_error(400, f"Invalid body format")
 
-    async def post(self, *args):
+    async def post(self, *args, **kwargs):
         data = {"$set": self.body.to_native()}
         status = await self.mongo.users.update_one(self.query, data)
         self.write({"message": status.raw_result})
