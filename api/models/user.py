@@ -39,11 +39,12 @@ class Subscriptions(Model):
     Updates = BooleanType()
 
 
-class UserModel(PasswordModel):
+class UserModel(PasswordModel, UsernameModel):
     Locale = StringType(choices=["en", "de"], default="en")
     Password = StringType()
     Signed = BooleanType(choices=[True])
     Subscriptions = ModelType(Subscriptions)
+    Token = StringType()
 
     def to_native(self, *args, **kwargs) -> dict:
         data = super().to_native(*args, **kwargs)

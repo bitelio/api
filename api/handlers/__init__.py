@@ -1,5 +1,6 @@
 from .base import BaseHandler
 from .user import UserHandler
+from .help import HelpHandler
 from .login import LoginHandler
 from .logout import LogoutHandler
 from .password import PasswordHandler
@@ -52,6 +53,7 @@ def configure(mapper, prefix=""):
 routes = configure({
     "api": {
         "user": UserHandler,
+        "help": HelpHandler,
         "login": LoginHandler,
         "logout": LogoutHandler,
         "password": PasswordHandler,

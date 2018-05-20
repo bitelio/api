@@ -4,6 +4,7 @@ from structlog.dev import ConsoleRenderer
 from structlog.processors import TimeStamper
 
 from api import config
+from api.config.util import Mock
 
 
 processors = [TimeStamper(fmt="%Y-%m-%d %H:%M:%S"), ConsoleRenderer()]
@@ -12,6 +13,7 @@ config.log.setLevel("DEBUG")
 config.configure(processors=config.processors)
 mongo = MotorClient(tz_aware=True)["test"]
 redis = FakeStrictRedis()
+sg = Mock(config.log)
 cookie = '{"UserName": "user1@example.org", "Boards": {"100000000": 4}}'
 redis.set("session:xxx", cookie)
 address = "127.0.0.1"
