@@ -1,4 +1,3 @@
-from copy import deepcopy
 from api.handlers import BaseHandler
 from api.models import StationsModel
 from api.mixins import BoardMixin, PostMixin, CollectionMixin
@@ -11,6 +10,7 @@ class StationsHandler(BoardMixin, PostMixin, CollectionMixin, BaseHandler):
 
     async def post(self, *args, **kwargs):
         body = self.body.to_native()
+        stations = [dict(BoardId=self.board_id, **s) for s in body]
         await self.db.remove(self.query)
-        await self.db.insert_many(deepcopy(body))
+        await self.db.insert_many(stations)
         self.write(body)

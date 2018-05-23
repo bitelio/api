@@ -25,5 +25,5 @@ class BaseHandler(RequestHandler):
     def write_error(self, status_code=None, message=None, exc_info=None):
         self.set_status(status_code or self._status_code)
         self.log = self.log.bind(event=message)
-        self.write({"error": {"code": status_code, "message": message}})
+        self.write({"code": status_code, "message": message})
         self.finish()

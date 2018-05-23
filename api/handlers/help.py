@@ -23,15 +23,17 @@ class HelpHandler(PostMixin, BaseHandler):
         if user:
             # save token
             query["Password"]["$exists"] = True
-            member = await self.mongo.users.find_one(query, projection)
-            data = UserModel(member)
             self.log = self.log.bind(user=self.body.UserName)
             deadline = int(time()) + self.validity
             token = token_hex(4) + hex(deadline)[2:]
-            data["Token"] = token
-            data = {"$set": data.to_native()}
-            response = await self.mongo.users.update_one(query, data)
-            if response:
+            member = await self.mongo.users.find_one(query, projection)
+            if member:
+                data = {"$set": {"Token": token}}
+                response = await self.mongo.users.update_one(query, data)
+            else:
+                data = {"UserName": username, "Token": token}
+                response = await self.mongo.users.insert_one(data)
+            if response.acknowledged:
                 # send email
                 link = f"https://bitelio.com/reset/{token}"
                 action = "recover" if "Password" in data else "activate"

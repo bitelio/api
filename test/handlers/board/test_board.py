@@ -13,5 +13,5 @@ class TestBoardHandler(BoardMixin, BaseTestCase):
         board = loads(response.body)
         expected = {"AvailableTags": "Tag1,Tag2", "Timezone": "Europe/Berlin",
                     "Update": True, "OfficeHours": ["8:00", "16:00"],
-                    "Holidays": ["2017-05-01"]}
+                    "Holidays": ["2017-05-01"], "Id": 100000000}
         assert board == expected

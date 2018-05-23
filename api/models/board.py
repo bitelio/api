@@ -1,9 +1,15 @@
 from schematics.models import Model
-from schematics.types import IntType, FloatType, StringType
+from schematics.types import IntType, FloatType, StringType, DateTimeType
 from schematics.types.compound import ListType, ModelType
 from schematics.exceptions import DataError
 
 from .base import ListModel
+
+
+class BoardModel(Model):
+    Timezone = StringType()
+    OfficeHours = ListType(StringType())
+    Holidays = ListType(DateTimeType())
 
 
 class StationModel(Model):

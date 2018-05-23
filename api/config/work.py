@@ -11,7 +11,7 @@ processors = [TimeStamper(fmt="%Y-%m-%d %H:%M:%S"), ConsoleRenderer()]
 config.processors.extend(processors)
 config.log.setLevel("DEBUG")
 config.configure(processors=config.processors)
-mongo = MotorClient(tz_aware=True)["test"]
+mongo = MotorClient(tz_aware=True)["bitelio"]
 redis = FakeStrictRedis()
 sg = Mock(config.log)
 cookie = '{"UserName": "user1@example.org", "Boards": {"100000000": 4}}'

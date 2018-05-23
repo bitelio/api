@@ -15,8 +15,10 @@ class PostMixin:
                 self.write_error(400, f"Invalid body format")
 
     async def post(self, *args, **kwargs):
+        name = self.collection.replace('_', ' ')
+        self.log = self.log.bind(event=f"Updating {name}")
         data = {"$set": self.body.to_native()}
-        status = await self.mongo.users.update_one(self.query, data)
+        status = await self.mongo[self.collection].update_one(self.query, data)
         self.write({"message": status.raw_result})
 
     @staticmethod

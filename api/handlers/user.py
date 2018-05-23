@@ -5,6 +5,7 @@ from api.handlers import BaseHandler
 
 class UserHandler(AuthMixin, PostMixin, BaseHandler):
     model = UserModel
+    collection = "users"
     roles = {1: "reader", 2: "user", 3: "manager", 4: "administrator"}
 
     async def get(self):
@@ -13,9 +14,10 @@ class UserHandler(AuthMixin, PostMixin, BaseHandler):
         query = [{"$match": {"UserName": self.user["UserName"]}},
                  {"$lookup": {"from": "boards", "localField": "BoardId",
                               "foreignField": "Id", "as": "Board"}},
-                 {"$project": {"Password": 0, "_id": 0}}]
+                 {"$project": {"Password": 0, "Token": 0, "_id": 0}}]
         async for item in self.mongo.users.aggregate(query):
             if item["Board"]:
+                user["Id"] = item["Id"]
                 user["FullName"] = item["FullName"]
                 user["GravatarLink"] = item["GravatarLink"]
                 user["Boards"].append({"Id": item["BoardId"],

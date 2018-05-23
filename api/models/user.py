@@ -8,7 +8,7 @@ class UsernameModel(Model):
     UserName = StringType(required=True)
 
     def __init__(self, raw_data, *args, **kwargs):
-        if "UserName" in raw_data and isinstance(raw_data["UserName"], str):
+        if raw_data and isinstance(raw_data.get("UserName"), str):
             raw_data["UserName"] = raw_data["UserName"].strip().lower()
         super().__init__(raw_data, *args, **kwargs)
 
@@ -42,14 +42,14 @@ class Subscriptions(Model):
 class UserModel(PasswordModel, UsernameModel):
     Locale = StringType(choices=["en", "de"], default="en")
     Password = StringType()
-    Signed = BooleanType(choices=[True])
+    Signed = BooleanType()
     Subscriptions = ModelType(Subscriptions)
     UserName = StringType()
     Token = StringType()
 
     def to_native(self, *args, **kwargs) -> dict:
         data = super().to_native(*args, **kwargs)
-        if "Password" in data:
+        if data.get("Password"):
             data["Password"] = self.hash()
         return data
 
