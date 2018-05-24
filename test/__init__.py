@@ -22,6 +22,9 @@ class BaseTestCase(AsyncHTTPTestCase):
     def post(self, body):
         return self.get(self.url, method="POST", body=dumps(body))
 
+    def delete(self):
+        return self.get(method="DELETE")
+
 
 def restore(collection):
     def decorate(test):

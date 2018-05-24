@@ -1,16 +1,5 @@
 [
   {
-    "UserName": "user1@example.org",
-    "Password": "$argon2i$v=19$m=512,t=2,p=2$13ovxdjbm7NWSkkpZeydsw$oBIChDeFXSGAHDe5UQr0jQ",
-    "Locale": "de",
-    "Signed": true,
-    "Token": null,
-    "Subscriptions": {
-      "Alerts": true,
-      "Updates": false
-    }
-  },
-  {
     "BoardId": 100000000,
     "Id": 123456789,
     "FullName": "User 1",

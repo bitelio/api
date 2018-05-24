@@ -3,7 +3,7 @@ from secrets import token_hex
 from urllib.error import HTTPError
 
 from api.mixins import PostMixin
-from api.models import UserModel, UsernameModel
+from api.models import UsernameModel
 from api.handlers import BaseHandler
 
 
@@ -16,23 +16,20 @@ class HelpHandler(PostMixin, BaseHandler):
     }
 
     async def post(self, *args, **kwargs):
-        username = self.body.UserName
-        projection = {"_id": 0, "Password": 0}
-        query = {"UserName": username, "Password": {"$exists": False}}
-        user = await self.mongo.users.find_one(query, projection)
+        query = {"UserName": self.body.UserName}
+        user = await self.mongo.users.find_one(query)
         if user:
             # save token
-            query["Password"]["$exists"] = True
             self.log = self.log.bind(user=self.body.UserName)
             deadline = int(time()) + self.validity
             token = token_hex(4) + hex(deadline)[2:]
-            member = await self.mongo.users.find_one(query, projection)
-            if member:
+            account = await self.mongo.accounts.find_one(query)
+            if account:
                 data = {"$set": {"Token": token}}
-                response = await self.mongo.users.update_one(query, data)
+                response = await self.mongo.accounts.update_one(query, data)
             else:
-                data = {"UserName": username, "Token": token}
-                response = await self.mongo.users.insert_one(data)
+                data = {"UserName": self.body.UserName, "Token": token}
+                response = await self.mongo.accounts.insert_one(data)
             if response.acknowledged:
                 # send email
                 link = f"https://bitelio.com/reset/{token}"
@@ -41,7 +38,7 @@ class HelpHandler(PostMixin, BaseHandler):
                 email = {
                     "personalizations": [
                         {
-                            "to": [{"email": username}],
+                            "to": [{"email": self.body.UserName}],
                             "substitutions": {"-name-": name, "-link-": link}
                         }
                     ],

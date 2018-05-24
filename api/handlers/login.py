@@ -7,8 +7,8 @@ class LoginHandler(PostMixin, TokenMixin, BaseHandler):
     model = type("LoginModel", (UsernameModel, PasswordModel), {})
 
     async def post(self):
-        query = {"UserName": self.body.UserName, "Password": {"$exists": True}}
-        user = await self.mongo.users.find_one(query)
+        query = {"UserName": self.body.UserName}
+        user = await self.mongo.accounts.find_one(query)
         if user:
             self.log = self.log.bind(user=self.body.UserName)
             if self.body.verify(user["Password"]):

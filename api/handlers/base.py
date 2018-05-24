@@ -4,7 +4,7 @@ from structlog import get_logger
 
 
 class BaseHandler(RequestHandler):
-    SUPPORTED_METHODS = ["GET", "POST"]
+    SUPPORTED_METHODS = ["GET", "POST", "DELETE"]
 
     def initialize(self):
         self.sg = self.settings.get("sg")
