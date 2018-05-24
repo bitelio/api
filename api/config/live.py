@@ -45,6 +45,7 @@ config.log.setLevel("INFO")
 mongo = MotorClient("mongo", tz_aware=True)["bitelio"]
 sg = SendGridAPIClient(apikey=getenv("SENDGRID"))
 redis = StrictRedis("redis")
+ipstack = getenv("APISTACK")
 
 port = 80
 compress_response = True

@@ -9,3 +9,4 @@ redis
 schematics
 structlog
 tornado
+aiohttp

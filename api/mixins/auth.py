@@ -11,5 +11,5 @@ class AuthMixin:
             self.user = loads(user)
             self.log = self.log.bind(user=self.user["UserName"])
         else:
-            self.write_error(401)
+            self.write_error(401, "Unauthorized")
             raise Finish()
