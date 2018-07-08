@@ -1,1 +1,3 @@
+-r test
+pytest
 colorama
