@@ -16,5 +16,5 @@ setup(name='api',
       version=version(),
       author='Guillermo Guirao Aguilar',
       author_email='info@bitelio.com',
-      url='https://github.com/bitelio/api',
-      classifiers=['Programming Language :: Python :: 3.6'])
+      url='https://github.com/bitelio/backend',
+      classifiers=['Programming Language :: Python :: 3.8'])

@@ -1,34 +1,30 @@
+from http import HTTPStatus
+from typing import List, Tuple
+from tornado.web import RequestHandler
+from structlog import get_logger
+
 from .base import BaseHandler
-from .user import UserHandler
-from .help import HelpHandler
-from .login import LoginHandler
-from .logout import LogoutHandler
-from .password import PasswordHandler
-from . import board
-
-
-responses = {
-    200: "OK",
-    201: "Created",
-    400: "Bad request",
-    401: "Unauthorized",
-    403: "Forbidden",
-    404: "Not found",
-    405: "Method not allowed",
-    500: "Internal server error"
-}
+from .auth import LoginHandler, LogoutHandler
 
 
 class NotFoundHandler(BaseHandler):
-    def prepare(self):
+    def prepare(self) -> None:
         self.write_error(404, "Invalid URL")
 
 
-def logger(handler):
+class StatusHandler(BaseHandler):
+    def get(self) -> None:
+        return
+
+
+def handler_log(handler):
     status_code = handler.get_status()
     if not handler.log._context.get("event"):
-        handler.log = handler.log.bind(event=responses.get(status_code))
-    if status_code < 400:
+        status = HTTPStatus(status_code)
+        handler.log = handler.log.bind(event=status.phrase)
+    if isinstance(handler, StatusHandler):
+        log = handler.log.debug
+    elif status_code < 400:
         log = handler.log.info
     elif status_code < 500:
         log = handler.log.warning
@@ -38,8 +34,8 @@ def logger(handler):
     log(status=status_code, time=time)
 
 
-def configure(mapper, prefix=""):
-    urls = []
+def configure(mapper, prefix="") -> List[Tuple[str, BaseHandler]]:
+    urls: List[Tuple[str, BaseHandler]] = []
     for key, value in mapper.items():
         if isinstance(value, dict):
             urls.extend(configure(value, f"{prefix}/{key}"))
@@ -51,12 +47,9 @@ def configure(mapper, prefix=""):
 
 
 routes = configure({
+    "status": StatusHandler,
     "api": {
-        "user": UserHandler,
-        "help": HelpHandler,
         "login": LoginHandler,
-        "logout": LogoutHandler,
-        "password": PasswordHandler,
-        "(?P<board_id>\d+)": board.routes
+        "logout": LogoutHandler
     }
 })

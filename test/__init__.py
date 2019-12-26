@@ -1,20 +1,42 @@
-from os import path, listdir
-from json import load, dumps
-from pytz import timezone
-from datetime import datetime
+from rapidjson import dumps
 from tornado.testing import AsyncHTTPTestCase
 
-from api import start
+from api.models import Role, User
+from api.server import setup
+from api.services import Services
+from api.settings import ServicesSettings, TornadoSettings
 
 
 class BaseTestCase(AsyncHTTPTestCase):
+    def setUp(self):
+        async def start():
+            await Services.start(ServicesSettings(store="sqlite://:memory:"))
+            await User.create(**self.user())
+            Services.redis.set(*self.session())
+
+        super().setUp()
+        self.io_loop.run_sync(start)
+
+    def user(self):
+        return {
+            "username":
+            'admin',
+            "email":
+            "admin@bitelio.com",
+            "role":
+            Role.admin,
+            "password": ("$argon2id$v=19$m=102400,t=2,p=8$vVdqLeV"
+                         "cay2ldO4do5QSQg$aIEv9g7o640tjqT9h3oXrw")
+        }
+
+    def session(self):
+        return ('+++', ('{"username": "admin", "token": "+++",'
+                        ' "role": 3, "date": "2000-01-01 00:00:00"}'))
+
     @staticmethod
     def get_app():
-        app = start("test")
-        cookie = ('{"UserName": "user1@example.org",'
-                  '"Boards": {"100000000": "admnistrator"}}')
-        app.settings["redis"].set("session:xxx", cookie)
-        return app
+        settings = TornadoSettings(debug=False, cookie_secret="")
+        return setup(settings)
 
     def get(self, url=None, **kwargs):
         return self.fetch(url or self.url, **kwargs)
@@ -25,31 +47,6 @@ class BaseTestCase(AsyncHTTPTestCase):
     def delete(self):
         return self.get(method="DELETE")
 
-
-def restore(collection):
-    def decorate(test):
-        def wrapper(self, *args, **kwargs):
-            result = test(self, *args, **kwargs)
-            mongo = self._app.settings["mongo"]
-            mongo.drop_collection(collection)
-            mongo[collection].insert_many(read(collection))
-            return result
-        return wrapper
-    return decorate
-
-
-def read(collection):
-    with open(path.join(folder, f"{collection}.json")) as json:
-        data = load(json)
-    if collection is "events":
-        with open(path.join(folder, "settings.json")) as json:
-            settings = load(json)
-        timezones = {doc["Id"]: timezone(doc["Timezone"]) for doc in settings}
-        for event in data:
-            date = datetime.strptime(event["DateTime"], "%Y-%m-%d %H:%M:%S")
-            event["DateTime"] = timezones[event["BoardId"]].localize(date)
-    return data
-
-
-folder = path.join(path.dirname(__file__), "data")
-collections = [path.basename(filename)[:-5] for filename in listdir(folder)]
+    def tearDown(self):
+        self.io_loop.run_sync(Services.stop)
+        super().tearDown()

@@ -1,0 +1,5 @@
+-r main.in
+mypy
+fakeredis
+pip-tools
+pytest

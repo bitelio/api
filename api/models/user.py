@@ -1,57 +1,13 @@
-from passlib.hash import argon2
-from schematics.models import Model
-from schematics.types import BooleanType, StringType, ModelType
-from schematics.exceptions import ValidationError
+from enum import IntEnum
+from tortoise.models import Model
+from tortoise.fields import CharField, SmallIntField
 
 
-class UsernameModel(Model):
-    UserName = StringType(required=True)
-
-    def __init__(self, raw_data, *args, **kwargs):
-        if raw_data and isinstance(raw_data.get("UserName"), str):
-            raw_data["UserName"] = raw_data["UserName"].strip().lower()
-        super().__init__(raw_data, *args, **kwargs)
+Role = IntEnum("Role", ("guest", "user", "admin"))
 
 
-class PasswordModel(Model):
-    Password = StringType(required=True)
-
-    @staticmethod
-    def validate_password(value):
-        if isinstance(value, str) and len(value) < 6:
-            msg = "Your password must be at least 6 characters long"
-            raise ValidationError(msg)
-        return value
-
-    def hash(self) -> str:
-        return argon2.hash(self.Password)
-
-    def verify(self, password: str) -> bool:
-        return argon2.verify(self.Password, password)
-
-
-class TokenModel(Model):
-    Token = StringType(required=True)
-
-
-class Subscriptions(Model):
-    Alerts = BooleanType()
-    Updates = BooleanType()
-
-
-class UserModel(PasswordModel, UsernameModel):
-    Locale = StringType(choices=["en", "de"], default="en")
-    Password = StringType()
-    Signed = BooleanType()
-    Subscriptions = ModelType(Subscriptions)
-    UserName = StringType()
-    Token = StringType()
-
-    def to_native(self, *args, **kwargs) -> dict:
-        data = super().to_native(*args, **kwargs)
-        if data.get("Password"):
-            data["Password"] = self.hash()
-        return data
-
-    class Options:
-        serialize_when_none = False
+class User(Model):
+    username: str = CharField(pk=True, max_length=32)
+    password: str = CharField(max_length=80)
+    email: str = CharField(unique=True, max_length=64)
+    role: Role = SmallIntField()

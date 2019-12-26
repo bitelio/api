@@ -1,0 +1,12 @@
+argon2-cffi
+asyncpg
+passlib
+pydantic
+python-json-logger
+python-rapidjson
+redis
+sentry-sdk
+squema
+structlog
+tornado
+tortoise-orm

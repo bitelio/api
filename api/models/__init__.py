@@ -1,6 +1,5 @@
-from .board import StationsModel, BoardModel
-from .user import UsernameModel, PasswordModel, UserModel, TokenModel
+from .user import User, Role
+from .session import Session
 
 
-__all__ = ["UsernameModel", "PasswordModel", "UserModel",
-           "TokenModel", "StationsModel", "BoardModel"]
+__all__ = ['User', 'Session', 'Role']
