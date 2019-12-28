@@ -35,7 +35,8 @@ class BaseTestCase(AsyncHTTPTestCase):
 
     @staticmethod
     def get_app():
-        settings = TornadoSettings(debug=False, cookie_secret="")
+        settings = TornadoSettings(
+            debug=False, cookie_secret="", xsrf_cookies=False)
         return setup(settings)
 
     def get(self, url=None, **kwargs):
