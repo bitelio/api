@@ -1,6 +1,5 @@
 from datetime import datetime
 from secrets import token_hex
-from typing import Optional
 
 from rapidjson import loads
 from squema import Squema
@@ -39,7 +38,7 @@ class Session(Squema):
         return session
 
     @classmethod
-    def get(cls, token: Token) -> Optional['Session']:
+    def get(cls, token: str) -> 'Session':
         session = Services.redis.get(token)
         if session:
             return cls(**loads(session))

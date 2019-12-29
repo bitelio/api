@@ -1,5 +1,7 @@
 -r main.in
-mypy
+colorama
 fakeredis
+flake8
+mypy
 pip-tools
 pytest

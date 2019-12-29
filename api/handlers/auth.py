@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from tornado.web import HTTPError
 
 from passlib.hash import argon2
-from tortoise.exceptions import DoesNotExist
 
 from ..models.user import User
 from ..models.session import Session, Token

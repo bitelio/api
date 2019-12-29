@@ -11,11 +11,12 @@ from tornado.web import HTTPError, RequestHandler
 from rapidjson import JSONDecodeError, loads
 from squema import Squema
 
-# from bson.json_util import dumps
+from ..models import Session
 
 
 class BaseHandler(RequestHandler):
-    SUPPORTED_METHODS = ["GET", "POST", "DELETE"]
+    SUPPORTED_METHODS = ("GET", "POST", "DELETE", "", "", "", "")
+    session: Session
 
     def initialize(self):
         log_info = ['method', 'path', 'remote_ip', 'query']
@@ -42,7 +43,7 @@ class BaseHandler(RequestHandler):
         if isinstance(data, (str, int, float)):
             super().write({data.__class__.__name__.lower(): data})
         elif isinstance(data, Squema):
-            super().write(data.encode())
+            super().write(str(data))
         else:
             super().write(data)
 
@@ -57,10 +58,10 @@ def endpoint(*middleware) -> Callable[..., Any]:
     def decorator(method):
         @wraps(method)
         async def wrapper(self, *args, **kwargs) -> None:
-            if schema:
+            if schema:  # type: ignore
                 try:
                     data = loads(self.request.body or "{}")
-                    body = schema(**data)
+                    body = schema(**data)  # type: ignore
                 except JSONDecodeError:
                     return self.send_error(400, message="Invalid body format")
                 except ValidationError as exception:

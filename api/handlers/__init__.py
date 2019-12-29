@@ -1,7 +1,5 @@
 from http import HTTPStatus
 from typing import List, Tuple
-from tornado.web import RequestHandler
-from structlog import get_logger
 
 from .base import BaseHandler
 from .auth import LoginHandler, LogoutHandler

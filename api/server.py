@@ -2,7 +2,6 @@ from signal import SIGTERM, SIGINT
 from asyncio import get_event_loop, ensure_future
 from structlog import get_logger
 
-from tornado.ioloop import IOLoop
 from tornado.web import Application
 
 from . import logging
@@ -13,7 +12,7 @@ from .handlers import NotFoundHandler, handler_log, routes
 
 def setup(settings: TornadoSettings) -> Application:
     return Application(
-        routes,
+        routes,  # type: ignore
         default_handler_class=NotFoundHandler,
         log_function=handler_log,
         **settings.dict())
