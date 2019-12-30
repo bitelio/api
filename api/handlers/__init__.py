@@ -4,6 +4,7 @@ from typing import List, Tuple
 from .base import BaseHandler
 from .auth import LoginHandler, LogoutHandler
 from .user import ProfileHandler
+from .debug import FastlaneHandler
 
 
 class NotFoundHandler(BaseHandler):
@@ -51,5 +52,6 @@ routes = configure({
         "login": LoginHandler,
         "logout": LogoutHandler,
         "profile": ProfileHandler,
+        "fastlane": FastlaneHandler,
     }
 })

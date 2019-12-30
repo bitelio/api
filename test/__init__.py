@@ -18,15 +18,13 @@ class BaseTestCase(AsyncHTTPTestCase):
         self.io_loop.run_sync(start)
 
     def user(self):
+        password = ("$argon2id$v=19$m=102400,t=2,p=8$vVdqLeV"
+                    "cay2ldO4do5QSQg$aIEv9g7o640tjqT9h3oXrw")
         return {
-            "username":
-            'admin',
-            "email":
-            "admin@bitelio.com",
-            "role":
-            Role.admin,
-            "password": ("$argon2id$v=19$m=102400,t=2,p=8$vVdqLeV"
-                         "cay2ldO4do5QSQg$aIEv9g7o640tjqT9h3oXrw")
+            "username": 'admin',
+            "email": "admin@bitelio.com",
+            "role": Role.admin,
+            "password": password,
         }
 
     def session(self):

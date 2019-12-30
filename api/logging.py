@@ -8,9 +8,9 @@ from structlog.stdlib import (BoundLogger, LoggerFactory,
                               PositionalArgumentsFormatter, add_log_level,
                               add_logger_name, filter_by_level)
 
-from pythonjsonlogger.jsonlogger import JsonFormatter  # type: ignore
-from sentry_sdk import init  # type: ignore
-from sentry_sdk.integrations.logging import LoggingIntegration  # type: ignore
+from pythonjsonlogger.jsonlogger import JsonFormatter
+from sentry_sdk import init
+from sentry_sdk.integrations.logging import LoggingIntegration
 
 
 class CustomJsonFormatter(JsonFormatter):

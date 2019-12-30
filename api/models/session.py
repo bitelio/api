@@ -1,9 +1,10 @@
 from datetime import datetime
 from secrets import token_hex
 
+from structlog import get_logger
+
 from rapidjson import loads
 from squema import Squema
-from structlog import get_logger
 
 from .. import Services
 from .user import Role
@@ -26,7 +27,7 @@ class Session(Squema):
     date: datetime
 
     @classmethod
-    def new(cls, username: str, role: str) -> 'Session':
+    def new(cls, username: str, role: int) -> 'Session':
         log.debug(f"New session for {username}")
         session = cls(
             username=username,

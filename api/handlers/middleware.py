@@ -52,4 +52,10 @@ def limiter(handler) -> None:
         raise HTTPError(429)
 
 
+@middleware
+def debug(handler) -> None:
+    if not handler.application.settings.get('debug'):
+        raise HTTPError(404)
+
+
 log = get_logger(__name__)
