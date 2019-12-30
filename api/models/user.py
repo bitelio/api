@@ -2,7 +2,6 @@ from enum import IntEnum
 from tortoise.models import Model
 from tortoise.fields import CharField, IntEnumField
 
-
 Role = IntEnum("Role", ("guest", "user", "admin"))
 
 

@@ -18,7 +18,9 @@ def middleware(function):
                 handler.send_error(error.status_code, reason=error.reason)
             else:
                 return await method(handler, *args, **kwargs)
+
         return wrapper
+
     return decorator
 
 
