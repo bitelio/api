@@ -38,9 +38,9 @@ class TestLogoutHandler(BaseTestCase):
     url = "/api/logout"
 
     def test_successful_logout(self):
-        response = self.get(headers={"Cookie": "token=+++"})
+        response = self.get(auth=True)
         assert response.code == 200
-        response = self.get()
+        response = self.get(auth=True)
         assert response.code == 401
 
     def test_missing_token(self):

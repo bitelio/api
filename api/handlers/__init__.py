@@ -3,6 +3,7 @@ from typing import List, Tuple
 
 from .base import BaseHandler
 from .auth import LoginHandler, LogoutHandler
+from .user import ProfileHandler
 
 
 class NotFoundHandler(BaseHandler):
@@ -48,6 +49,7 @@ routes = configure({
     "status": StatusHandler,
     "api": {
         "login": LoginHandler,
-        "logout": LogoutHandler
+        "logout": LogoutHandler,
+        "profile": ProfileHandler,
     }
 })

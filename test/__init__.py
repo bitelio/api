@@ -1,10 +1,10 @@
-from rapidjson import dumps
 from tornado.testing import AsyncHTTPTestCase
 
 from api.models import Role, User
 from api.server import setup
 from api.services import Services
 from api.settings import ServicesSettings, TornadoSettings
+from rapidjson import dumps
 
 
 class BaseTestCase(AsyncHTTPTestCase):
@@ -39,7 +39,11 @@ class BaseTestCase(AsyncHTTPTestCase):
             debug=False, cookie_secret="", xsrf_cookies=False)
         return setup(settings)
 
-    def get(self, url=None, **kwargs):
+    def get(self, url=None, auth=False, **kwargs):
+        if auth:
+            headers = kwargs.get('headers', {})
+            headers.update({'Cookie': 'token=+++'})
+            kwargs['headers'] = headers
         return self.fetch(url or self.url, **kwargs)
 
     def post(self, body):
