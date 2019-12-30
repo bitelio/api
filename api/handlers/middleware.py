@@ -1,9 +1,12 @@
 from typing import Any
+from rapidjson import loads
+from datetime import datetime
 from functools import wraps
 from tornado.web import HTTPError
 from structlog import get_logger
 
 from .base import BaseHandler
+from ..services import Services
 from ..models.session import Session, DoesNotExist
 
 
@@ -39,12 +42,14 @@ def authenticator(handler: BaseHandler) -> None:
 
 
 @middleware
-def limiter(handler):
-    return
-    if handler.services.limiter.check():
-        raise HTTPError(429)
+def limiter(handler) -> None:
+    username = loads(handler.request.body).get('username')
+    key = f"limiter:{username}:{datetime.now().minute}"
+    requests = int(Services.redis.get(key) or 0)
+    if requests < 3:
+        Services.redis.set(key, requests + 1, ex=59)
     else:
-        handler.services.limiter.set(handler.request.remote_ip)
+        raise HTTPError(429)
 
 
 log = get_logger(__name__)

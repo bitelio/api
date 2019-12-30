@@ -33,6 +33,13 @@ class TestLoginHandler(BaseTestCase):
         response = self.post(body={"username": "guest"})
         assert response.code == 400
 
+    def test_rate_limiter(self):
+        for i in range(3):
+            response = self.post(body={'username': 'guest', 'password': 'ooo'})
+            assert response.code == 401
+        response = self.post(body={'username': 'guest'})
+        assert response.code == 429
+
 
 class TestLogoutHandler(BaseTestCase):
     url = "/api/logout"
