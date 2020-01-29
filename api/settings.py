@@ -6,7 +6,7 @@ class ConfigurationError(Exception):
 
 
 class SettingsConfig(BaseSettings):
-    class Config():
+    class Config:
         env_prefix = 'btl_'
 
 

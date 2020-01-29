@@ -23,7 +23,7 @@ def start() -> None:
     logging.setup(settings.services.sentry, settings.debug)
     loop = get_event_loop()
     loop.run_until_complete(Services.start(settings.services))
-    log.info(f"Starting server")
+    log.info(f"Starting API server")
     application = setup(settings.tornado)
     server = application.listen(**settings.server.dict())
     for signal in [SIGINT, SIGTERM]:

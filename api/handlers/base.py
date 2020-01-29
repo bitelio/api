@@ -4,12 +4,13 @@ from inspect import signature
 from types import TracebackType
 from typing import Any, Callable, Optional, Type
 
+from prometheus_client import Histogram
 from pydantic import ValidationError
+from squema import Squema
 from structlog import get_logger
 from tornado.web import HTTPError, RequestHandler
 
 from rapidjson import JSONDecodeError, loads
-from squema import Squema
 
 from ..models import Session
 
@@ -17,6 +18,7 @@ from ..models import Session
 class BaseHandler(RequestHandler):
     SUPPORTED_METHODS = ("GET", "POST", "DELETE", "", "", "", "")
     session: Session
+    metrics = Histogram('api_request_duration_seconds', 'Request latency')
 
     def initialize(self):
         log_info = ['method', 'path', 'remote_ip', 'query']
@@ -52,6 +54,13 @@ class BaseHandler(RequestHandler):
         self.log = self.log.bind(event=message)
         self.write({"code": status_code, "message": message})
         self.finish()
+
+    def on_finish(self) -> None:
+        self.metrics.observe(self.request.request_time())
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
 
 
 def endpoint(*middleware) -> Callable[..., Any]:

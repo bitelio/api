@@ -42,8 +42,8 @@ def authenticator(handler: BaseHandler) -> None:
 
 
 @middleware
-def limiter(handler) -> None:
-    username = loads(handler.request.body).get('username')
+def limiter(handler: BaseHandler) -> None:
+    username = loads(handler.request.body or "{}").get('username')
     key = f"limiter:{username}:{datetime.now().minute}"
     requests = int(Services.redis.get(key) or 0)
     if requests < 3:
@@ -53,7 +53,7 @@ def limiter(handler) -> None:
 
 
 @middleware
-def debug(handler) -> None:
+def debug(handler: BaseHandler) -> None:
     if not handler.application.settings.get('debug'):
         raise HTTPError(404)
 

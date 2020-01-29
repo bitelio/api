@@ -1,6 +1,7 @@
 argon2-cffi
 aiomysql
 passlib
+prometheus_client
 pydantic
 python-json-logger
 python-rapidjson

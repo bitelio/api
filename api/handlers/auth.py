@@ -29,6 +29,6 @@ class LoginHandler(BaseHandler):
 
 class LogoutHandler(BaseHandler):
     @endpoint(authenticator)
-    async def get(self) -> None:
+    def get(self) -> None:
         self.session.end()
         self.log = self.log.bind(event=f"Logged out {self.session.username}")
