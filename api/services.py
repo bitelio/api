@@ -2,7 +2,7 @@ from redis import Redis
 from structlog import get_logger
 from tortoise import Tortoise
 
-from .settings import ServicesSettings
+from .settings import ServicesSettings, ConfigurationError
 
 
 class Services:
@@ -14,8 +14,11 @@ class Services:
         if settings.cache:
             cls.redis = Redis(settings.cache)
         else:
-            from fakeredis import FakeRedis
-            cls.redis = FakeRedis()
+            try:
+                from fakeredis import FakeRedis
+                cls.redis = FakeRedis()
+            except ModuleNotFoundError:
+                raise ConfigurationError(f"No cache store defined")
         try:
             cls.redis.get('')
             log.info(f"Connected to cache on {settings.cache or 'localhost'}")

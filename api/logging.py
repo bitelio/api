@@ -42,7 +42,7 @@ def setup(sentry: str, debug: bool = False) -> None:
         ]
     else:
         handler = StreamHandler()
-        formatter = CustomJsonFormatter("(levelname) (name) (message)")
+        formatter = CustomJsonFormatter("%(levelname)s %(name)s %(message)s")
         handler.setFormatter(formatter)
         getLogger("tornado").addHandler(handler)
 

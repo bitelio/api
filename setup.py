@@ -1,5 +1,5 @@
 from os import path
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def version():
@@ -9,7 +9,7 @@ def version():
 
 
 setup(name='api',
-      packages=['api'],
+      packages=find_packages(),
       version=version(),
       author='Guillermo Guirao Aguilar',
       author_email='info@bitelio.com',

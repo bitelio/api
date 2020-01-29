@@ -1,6 +1,10 @@
 from pydantic import BaseSettings
 
 
+class ConfigurationError(Exception):
+    pass
+
+
 class SettingsConfig(BaseSettings):
     class Config():
         env_prefix = 'btl_'
