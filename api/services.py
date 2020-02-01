@@ -1,8 +1,9 @@
-from redis import Redis
 from structlog import get_logger
+
+from redis import Redis
 from tortoise import Tortoise
 
-from .settings import ServicesSettings, ConfigurationError
+from .settings import ConfigurationError, ServicesSettings
 
 
 class Services:

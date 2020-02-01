@@ -1,5 +1,5 @@
 argon2-cffi
-asyncpg
+aiomysql
 passlib
 pydantic
 python-json-logger
