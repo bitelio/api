@@ -1,26 +1,29 @@
-from typing import Any
-from rapidjson import loads
 from datetime import datetime
 from functools import wraps
-from tornado.web import HTTPError
+from typing import Any, Callable
+
 from structlog import get_logger
+from tornado.web import HTTPError
 
-from .base import BaseHandler
+from rapidjson import loads
+
+from ..models.session import DoesNotExist, Session
 from ..services import Services
-from ..models.session import Session, DoesNotExist
+from .base import BaseHandler
 
 
-def middleware(function):
+def middleware(function: Callable[[BaseHandler], None]
+               ) -> Callable[[Callable[..., Any]], Callable[..., None]]:
     @wraps(function)
-    def decorator(method):
+    def decorator(method: Callable[..., Any]) -> Callable[..., None]:
         @wraps(method)
-        async def wrapper(handler: BaseHandler, *args, **kwargs) -> Any:
+        async def wrapper(handler: BaseHandler, *args, **kwargs) -> None:
             try:
                 function(handler)
             except HTTPError as error:
                 handler.send_error(error.status_code, reason=error.reason)
             else:
-                return await method(handler, *args, **kwargs)
+                await method(handler, *args, **kwargs)
 
         return wrapper
 

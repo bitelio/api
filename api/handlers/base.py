@@ -1,4 +1,5 @@
 from functools import wraps
+from inspect import isawaitable
 from http import HTTPStatus
 from inspect import signature
 from types import TracebackType
@@ -78,7 +79,9 @@ def endpoint(*middleware) -> Callable[..., Any]:
                     return self.send_error(
                         400, message=f"{error['loc'][0]}: {error['msg']}")
                 kwargs["body"] = body
-            response = await method(self, *args, **kwargs)
+            response = method(self, *args, **kwargs)
+            if isawaitable(response):
+                response = await response
             if response:
                 if response is HTTPStatus:
                     self.set_status(response, reason=response.phrase)
