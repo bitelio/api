@@ -8,6 +8,6 @@ class TestFastlaneHandler(BaseTestCase):
     def test_debug_endpoint(self):
         response = self.get()
         assert response.code == 404
-        with patch.dict(self._app.settings, {'debug': True}):
+        with patch.dict(self._app.settings, {"debug": True}):
             response = self.get()
             assert response.code == 200

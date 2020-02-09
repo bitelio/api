@@ -17,14 +17,16 @@ class Services:
         else:
             try:
                 from fakeredis import FakeRedis
+
                 cls.redis = FakeRedis()
             except ModuleNotFoundError:
                 raise ConfigurationError(f"No cache store defined")
         try:
-            cls.redis.get('')
+            cls.redis.get("")
             log.info(f"Connected to cache on {settings.cache or 'localhost'}")
             await Tortoise.init(
-                db_url=settings.store, modules={'models': ['api.models']})
+                db_url=settings.store, modules={"models": ["api.models"]}
+            )
             log.info(f"Connected to database on {settings.store}")
             await Tortoise.generate_schemas(safe=True)
         except Exception as error:

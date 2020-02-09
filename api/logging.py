@@ -2,11 +2,21 @@ from logging import DEBUG, ERROR, INFO, StreamHandler, getLogger
 
 from structlog import configure, get_logger
 from structlog.dev import CYAN, ConsoleRenderer
-from structlog.processors import (JSONRenderer, StackInfoRenderer, TimeStamper,
-                                  UnicodeDecoder, format_exc_info)
-from structlog.stdlib import (BoundLogger, LoggerFactory,
-                              PositionalArgumentsFormatter, add_log_level,
-                              add_logger_name, filter_by_level)
+from structlog.processors import (
+    JSONRenderer,
+    StackInfoRenderer,
+    TimeStamper,
+    UnicodeDecoder,
+    format_exc_info,
+)
+from structlog.stdlib import (
+    BoundLogger,
+    LoggerFactory,
+    PositionalArgumentsFormatter,
+    add_log_level,
+    add_logger_name,
+    filter_by_level,
+)
 
 from pythonjsonlogger.jsonlogger import JsonFormatter
 from sentry_sdk import init
@@ -22,23 +32,27 @@ class CustomJsonFormatter(JsonFormatter):
 
 def setup(sentry: str, debug: bool = False) -> None:
     processors = [
-        filter_by_level, add_log_level, add_logger_name,
+        filter_by_level,
+        add_log_level,
+        add_logger_name,
         PositionalArgumentsFormatter(),
-        StackInfoRenderer(), format_exc_info,
-        UnicodeDecoder()
+        StackInfoRenderer(),
+        format_exc_info,
+        UnicodeDecoder(),
     ]
 
     configure(
         logger_factory=LoggerFactory(),
         wrapper_class=BoundLogger,
-        cache_logger_on_first_use=True)
+        cache_logger_on_first_use=True,
+    )
 
     if debug:
         styles = ConsoleRenderer.get_default_level_styles()
-        styles['debug'] = CYAN
+        styles["debug"] = CYAN
         processors += [
             TimeStamper(fmt="%Y-%m-%d %H:%M:%S"),
-            ConsoleRenderer(level_styles=styles)
+            ConsoleRenderer(level_styles=styles),
         ]
     else:
         handler = StreamHandler()

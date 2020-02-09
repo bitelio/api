@@ -15,7 +15,8 @@ def setup(settings: TornadoSettings) -> Application:
         routes,  # type: ignore
         default_handler_class=NotFoundHandler,
         log_function=handler_log,
-        **settings.dict())
+        **settings.dict(),
+    )
 
 
 def start() -> None:
@@ -33,7 +34,7 @@ def start() -> None:
 
 
 def stop(server, loop) -> None:
-    log.info(f'Stopping server')
+    log.info(f"Stopping server")
     server.stop()
     ensure_future(Services.stop())
     loop.call_later(1, loop.stop)

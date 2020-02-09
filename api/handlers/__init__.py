@@ -25,12 +25,12 @@ class MetricsHandler(BaseHandler):
 
     def get(self) -> None:
         registry = self.registry
-        accept = self.request.headers.get('Accept')
+        accept = self.request.headers.get("Accept")
         encoder, content_type = choose_encoder(accept)
-        if name := self.get_argument('name', None):  # noqa
+        if name := self.get_argument("name", None):  # noqa
             registry = registry.restricted_registry(name)
         output = encoder(registry)
-        self.set_header('Content-Type', content_type)
+        self.set_header("Content-Type", content_type)
         self.write(output)
 
 
@@ -63,13 +63,15 @@ def configure(mapper, prefix="") -> List[Tuple[str, BaseHandler]]:
     return urls
 
 
-routes = configure({
-    "status": StatusHandler,
-    "metrics": MetricsHandler,
-    "api": {
-        "login": LoginHandler,
-        "logout": LogoutHandler,
-        "profile": ProfileHandler,
-        "fastlane": FastlaneHandler,
+routes = configure(
+    {
+        "status": StatusHandler,
+        "metrics": MetricsHandler,
+        "api": {
+            "login": LoginHandler,
+            "logout": LogoutHandler,
+            "profile": ProfileHandler,
+            "fastlane": FastlaneHandler,
+        },
     }
-})
+)

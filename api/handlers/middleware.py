@@ -12,8 +12,9 @@ from ..services import Services
 from .base import BaseHandler
 
 
-def middleware(function: Callable[[BaseHandler], None]
-               ) -> Callable[[Callable[..., Any]], Callable[..., None]]:
+def middleware(
+    function: Callable[[BaseHandler], None]
+) -> Callable[[Callable[..., Any]], Callable[..., None]]:
     @wraps(function)
     def decorator(method: Callable[..., Any]) -> Callable[..., None]:
         @wraps(method)
@@ -46,7 +47,7 @@ def authenticator(handler: BaseHandler) -> None:
 
 @middleware
 def limiter(handler: BaseHandler) -> None:
-    username = loads(handler.request.body or "{}").get('username')
+    username = loads(handler.request.body or "{}").get("username")
     key = f"limiter:{username}:{datetime.now().minute}"
     requests = int(Services.redis.get(key) or 0)
     if requests < 3:
@@ -57,7 +58,7 @@ def limiter(handler: BaseHandler) -> None:
 
 @middleware
 def debug(handler: BaseHandler) -> None:
-    if not handler.application.settings.get('debug'):
+    if not handler.application.settings.get("debug"):
         raise HTTPError(404)
 
 

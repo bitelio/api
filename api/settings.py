@@ -7,7 +7,7 @@ class ConfigurationError(Exception):
 
 class SettingsConfig(BaseSettings):
     class Config:
-        env_prefix = 'btl_'
+        env_prefix = "btl_"
 
 
 class ServerSettings(SettingsConfig):

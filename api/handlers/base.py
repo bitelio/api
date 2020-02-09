@@ -19,27 +19,26 @@ from ..models import Session
 class BaseHandler(RequestHandler):
     SUPPORTED_METHODS = ("GET", "POST", "DELETE", "", "", "", "")
     session: Session
-    metrics = Histogram('api_request_duration_seconds', 'Request latency')
+    metrics = Histogram("api_request_duration_seconds", "Request latency")
 
     def initialize(self):
-        log_info = ['method', 'path', 'remote_ip', 'query']
-        self.log = get_logger('api.handlers').bind(
-            **{key: getattr(self.request, key)
-               for key in log_info})
+        log_info = ["method", "path", "remote_ip", "query"]
+        self.log = get_logger("api.handlers").bind(
+            **{key: getattr(self.request, key) for key in log_info}
+        )
 
     def log_exception(
-            self,
-            exception_type: Optional[Type[BaseException]],
-            value: Optional[BaseException],
-            traceback: Optional[TracebackType],
+        self,
+        exception_type: Optional[Type[BaseException]],
+        value: Optional[BaseException],
+        traceback: Optional[TracebackType],
     ) -> None:
         if isinstance(value, HTTPError):
             if value.log_message:
                 self.log.warning(value.log_message, status=value.status_code)
         else:
             self.log.error(
-                "Uncaught exception",
-                exc_info=(exception_type, value, traceback),
+                "Uncaught exception", exc_info=(exception_type, value, traceback),
             )
 
     def write(self, data: Any) -> None:
@@ -77,7 +76,8 @@ def endpoint(*middleware) -> Callable[..., Any]:
                 except ValidationError as exception:
                     error = exception.errors()[0]
                     return self.send_error(
-                        400, message=f"{error['loc'][0]}: {error['msg']}")
+                        400, message=f"{error['loc'][0]}: {error['msg']}"
+                    )
                 kwargs["body"] = body
             response = method(self, *args, **kwargs)
             if isawaitable(response):

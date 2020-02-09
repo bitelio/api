@@ -15,8 +15,8 @@ class TestLoginHandler(BaseTestCase):
         body = loads(response.body)
         assert "token" in body
         assert Services.redis.exists(f"{body['token']}")
-        session = Session.get(body['token'])
-        assert session.username == 'admin'
+        session = Session.get(body["token"])
+        assert session.username == "admin"
         assert session.role == 3
 
     def test_wrong_username(self):
@@ -35,9 +35,9 @@ class TestLoginHandler(BaseTestCase):
 
     def test_rate_limiter(self):
         for i in range(3):
-            response = self.post(body={'username': 'guest', 'password': 'ooo'})
+            response = self.post(body={"username": "guest", "password": "ooo"})
             assert response.code == 401
-        response = self.post(body={'username': 'guest'})
+        response = self.post(body={"username": "guest"})
         assert response.code == 429
 
 
