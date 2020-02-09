@@ -27,7 +27,8 @@ class MetricsHandler(BaseHandler):
         registry = self.registry
         accept = self.request.headers.get("Accept")
         encoder, content_type = choose_encoder(accept)
-        if name := self.get_argument("name", None):  # noqa
+        name = self.get_argument("name", None)
+        if name:
             registry = registry.restricted_registry(name)
         output = encoder(registry)
         self.set_header("Content-Type", content_type)
