@@ -30,7 +30,10 @@ class Session(Squema):
     def new(cls, username: str, role: int) -> "Session":
         log.debug(f"New session for {username}")
         session = cls(
-            username=username, token=Token.new(), role=role, date=datetime.today()
+            username=username,
+            token=Token.new(),
+            role=role,
+            date=datetime.today(),
         )
         duration = 60 * 60 * 24 * 12
         Services.redis.set(session.token, str(session), duration)

@@ -13,13 +13,17 @@ from tornado.web import HTTPError, RequestHandler
 
 from rapidjson import JSONDecodeError, loads
 
-from ..models import Session
+from api.models import Session
 
 
 class BaseHandler(RequestHandler):
     SUPPORTED_METHODS = ("GET", "POST", "DELETE", "", "", "", "")
     session: Session
-    metrics = Histogram("api_request_duration_seconds", "Request latency")
+    metrics = Histogram(
+        "api_request_duration_seconds",
+        "Request latency",
+        ("handler", "method", "status"),
+    )
 
     def initialize(self):
         log_info = ["method", "path", "remote_ip", "query"]
@@ -38,7 +42,8 @@ class BaseHandler(RequestHandler):
                 self.log.warning(value.log_message, status=value.status_code)
         else:
             self.log.error(
-                "Uncaught exception", exc_info=(exception_type, value, traceback),
+                "Uncaught exception",
+                exc_info=(exception_type, value, traceback),
             )
 
     def write(self, data: Any) -> None:
@@ -56,7 +61,11 @@ class BaseHandler(RequestHandler):
         self.finish()
 
     def on_finish(self) -> None:
-        self.metrics.observe(self.request.request_time())
+        self.metrics.labels(
+            handler=self.name,
+            method=self.request.method,
+            status=self.get_status(),
+        ).observe(self.request.request_time())
 
     @property
     def name(self) -> str:

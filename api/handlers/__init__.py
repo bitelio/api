@@ -1,6 +1,5 @@
 from http import HTTPStatus
 from typing import List, Tuple
-from tornado.web import RequestHandler
 from prometheus_client import REGISTRY
 from prometheus_client.exposition import choose_encoder
 
