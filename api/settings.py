@@ -7,12 +7,12 @@ class ConfigurationError(Exception):
 
 class SettingsConfig(BaseSettings):
     class Config:
-        env_prefix = "btl_"
+        env_prefix = "api_"
 
 
 class ServerSettings(SettingsConfig):
     address: str = "0"
-    port: int = 80
+    port: int = 8080
 
 
 class ServicesSettings(SettingsConfig):

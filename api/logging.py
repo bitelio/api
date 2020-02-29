@@ -1,7 +1,7 @@
 from logging import DEBUG, ERROR, INFO, StreamHandler, getLogger
 
 from structlog import configure, get_logger
-from structlog.dev import CYAN, ConsoleRenderer
+from structlog.dev import DIM, ConsoleRenderer
 from structlog.processors import (
     JSONRenderer,
     StackInfoRenderer,
@@ -49,7 +49,7 @@ def setup(sentry: str, debug: bool = False) -> None:
 
     if debug:
         styles = ConsoleRenderer.get_default_level_styles()
-        styles["debug"] = CYAN
+        styles["debug"] = DIM
         processors += [
             TimeStamper(fmt="%Y-%m-%d %H:%M:%S"),
             ConsoleRenderer(level_styles=styles),
@@ -58,7 +58,8 @@ def setup(sentry: str, debug: bool = False) -> None:
         handler = StreamHandler()
         formatter = CustomJsonFormatter("%(levelname)s %(name)s %(message)s")
         handler.setFormatter(formatter)
-        getLogger("tornado").addHandler(handler)
+        for module in ("tornado", "tortoise", "aiomysql"):
+            getLogger(module).addHandler(handler)
 
         sentry_logging = LoggingIntegration(level=INFO, event_level=ERROR)
         init(sentry, integrations=[sentry_logging])

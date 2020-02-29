@@ -1,5 +1,5 @@
-argon2-cffi
 aiomysql
+argon2-cffi
 passlib
 prometheus_client
 pydantic
