@@ -6,10 +6,10 @@
 #
 aiomysql==0.0.20 \
     --hash=sha256:5fd798481f16625b424eec765c56d712ac78a51f3bd0175a3de94107aae43307 \
-    --hash=sha256:d89ce25d44dadb43cf2d9e4603bd67b7a0ad12d5e67208de013629ba648df2ba \
+    --hash=sha256:d89ce25d44dadb43cf2d9e4603bd67b7a0ad12d5e67208de013629ba648df2ba
     # via -r main.in
 aiosqlite==0.11.0 \
-    --hash=sha256:4f02314a42db6722dc26f2a6119c64e3f05f141f57bbf2b1e1f9fd741b6d7fb8 \
+    --hash=sha256:4f02314a42db6722dc26f2a6119c64e3f05f141f57bbf2b1e1f9fd741b6d7fb8
     # via tortoise-orm
 argon2-cffi==19.2.0 \
     --hash=sha256:00e94a65d46c3f6f2ffab769e860efc21f77e55bd8fcdfde422bd07c632b3fcc \
@@ -29,15 +29,15 @@ argon2-cffi==19.2.0 \
     --hash=sha256:e27488da690afac92e87cb61ba9cf9a22bff790413f55655ad017456cd58f22c \
     --hash=sha256:f2c7f3cd5fe6770fa21ee3d4bb7ba0e1c207e18ead511d912cbf9571c598c345 \
     --hash=sha256:f79045e7673d72ed0f33d78a5e104702f989eb1a0e0eb0ab5534cebc9cdb9142 \
-    --hash=sha256:ffaa623eea77b497ffbdd1a51e941b33d3bf552c60f14dbee274c4070677bda3 \
+    --hash=sha256:ffaa623eea77b497ffbdd1a51e941b33d3bf552c60f14dbee274c4070677bda3
     # via -r main.in
 attrs==19.3.0 \
     --hash=sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c \
-    --hash=sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72 \
+    --hash=sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72
     # via pytest
 certifi==2019.11.28 \
     --hash=sha256:017c25db2a153ce562900032d5bc68e9f191e44e9a0f762f373977de9df1fbb3 \
-    --hash=sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f \
+    --hash=sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f
     # via sentry-sdk
 cffi==1.13.2 \
     --hash=sha256:0b49274afc941c626b605fb59b59c3485c17dc776dc3cc7cc14aca74cc19cc42 \
@@ -72,18 +72,20 @@ cffi==1.13.2 \
     --hash=sha256:d75c461e20e29afc0aee7172a0950157c704ff0dd51613506bd7d82b718e7410 \
     --hash=sha256:dcd65317dd15bc0451f3e01c80da2216a31916bdcffd6221ca1202d96584aa25 \
     --hash=sha256:e570d3ab32e2c2861c4ebe6ffcad6a8abf9347432a37608fe1fbd157b3f0036b \
-    --hash=sha256:fd43a88e045cf992ed09fa724b5315b790525f2676883a6ea64e3263bae6549d \
-    # via argon2-cffi, cryptography
+    --hash=sha256:fd43a88e045cf992ed09fa724b5315b790525f2676883a6ea64e3263bae6549d
+    # via
+    #   argon2-cffi
+    #   cryptography
 ciso8601==2.1.2 \
-    --hash=sha256:307342e8bb362ae41a3f3a089c11b374116823bce6fbe5d784e2a2dc37f2c753 \
+    --hash=sha256:307342e8bb362ae41a3f3a089c11b374116823bce6fbe5d784e2a2dc37f2c753
     # via tortoise-orm
 click==7.0 \
     --hash=sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13 \
-    --hash=sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7 \
+    --hash=sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7
     # via pip-tools
 colorama==0.4.3 \
     --hash=sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff \
-    --hash=sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1 \
+    --hash=sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1
     # via -r test.in
 cryptography==3.2 \
     --hash=sha256:22f8251f68953553af4f9c11ec5f191198bc96cff9f0ac5dd5ff94daede0ee6d \
@@ -107,31 +109,31 @@ cryptography==3.2 \
     --hash=sha256:f01c9116bfb3ad2831e125a73dcd957d173d6ddca7701528eff1e7d97972872c \
     --hash=sha256:f0e3986f6cce007216b23c490f093f35ce2068f3c244051e559f647f6731b7ae \
     --hash=sha256:f2aa3f8ba9e2e3fd49bd3de743b976ab192fbf0eb0348cebde5d2a9de0090a9f \
-    --hash=sha256:fb70a4cedd69dc52396ee114416a3656e011fb0311fca55eb55c7be6ed9c8aef \
+    --hash=sha256:fb70a4cedd69dc52396ee114416a3656e011fb0311fca55eb55c7be6ed9c8aef
     # via pymysql
 entrypoints==0.3 \
     --hash=sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19 \
-    --hash=sha256:c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451 \
+    --hash=sha256:c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451
     # via flake8
 fakeredis==1.1.0 \
     --hash=sha256:169598943dc10aadd62871a34b2867bb5e24f9da7ebc97a2058c3f35c760241e \
-    --hash=sha256:1db27ec3a5c964b9fb9f36ec1b9770a81204c54e84f83c763f36689eef4a5fd4 \
+    --hash=sha256:1db27ec3a5c964b9fb9f36ec1b9770a81204c54e84f83c763f36689eef4a5fd4
     # via -r test.in
 flake8==3.7.9 \
     --hash=sha256:45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb \
-    --hash=sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca \
+    --hash=sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca
     # via -r test.in
 mccabe==0.6.1 \
     --hash=sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42 \
-    --hash=sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f \
+    --hash=sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f
     # via flake8
 more-itertools==8.0.2 \
     --hash=sha256:b84b238cce0d9adad5ed87e745778d20a3f8487d0f0cb8b8a586816c7496458d \
-    --hash=sha256:c833ef592a0324bcc6a60e48440da07645063c453880c9477ceb22490aec1564 \
+    --hash=sha256:c833ef592a0324bcc6a60e48440da07645063c453880c9477ceb22490aec1564
     # via pytest
 mypy-extensions==0.4.3 \
     --hash=sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d \
-    --hash=sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8 \
+    --hash=sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8
     # via mypy
 mypy==0.761 \
     --hash=sha256:0a9a45157e532da06fe56adcfef8a74629566b607fa2c1ac0122d1ff995c748a \
@@ -147,37 +149,37 @@ mypy==0.761 \
     --hash=sha256:a6bd44efee4dc8c3324c13785a9dc3519b3ee3a92cada42d2b57762b7053b49b \
     --hash=sha256:c6d27bd20c3ba60d5b02f20bd28e20091d6286a699174dfad515636cb09b5a72 \
     --hash=sha256:e2bb577d10d09a2d8822a042a23b8d62bc3b269667c9eb8e60a6edfa000211b1 \
-    --hash=sha256:f97a605d7c8bc2c6d1172c2f0d5a65b24142e11a58de689046e62c2d632ca8c1 \
+    --hash=sha256:f97a605d7c8bc2c6d1172c2f0d5a65b24142e11a58de689046e62c2d632ca8c1
     # via -r test.in
 packaging==19.2 \
     --hash=sha256:28b924174df7a2fa32c1953825ff29c61e2f5e082343165438812f00d3a7fc47 \
-    --hash=sha256:d9551545c6d761f3def1677baf08ab2a3ca17c56879e70fecba2fc4dde4ed108 \
+    --hash=sha256:d9551545c6d761f3def1677baf08ab2a3ca17c56879e70fecba2fc4dde4ed108
     # via pytest
 passlib==1.7.2 \
     --hash=sha256:68c35c98a7968850e17f1b6892720764cc7eed0ef2b7cb3116a89a28e43fe177 \
-    --hash=sha256:8d666cef936198bc2ab47ee9b0410c94adf2ba798e5a84bf220be079ae7ab6a8 \
+    --hash=sha256:8d666cef936198bc2ab47ee9b0410c94adf2ba798e5a84bf220be079ae7ab6a8
     # via -r main.in
 pip-tools==4.3.0 \
     --hash=sha256:06efa50b7089b2abbfcf4b47684960538af74669e801e69a557cb8a1c6ad6674 \
-    --hash=sha256:79e8137a2b96906ccaed0151e1df42daf386d51abb80286173d112b5296a5775 \
+    --hash=sha256:79e8137a2b96906ccaed0151e1df42daf386d51abb80286173d112b5296a5775
     # via -r test.in
 pluggy==0.13.1 \
     --hash=sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0 \
-    --hash=sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d \
+    --hash=sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d
     # via pytest
 prometheus-client==0.7.1 \
-    --hash=sha256:71cd24a2b3eb335cb800c7159f423df1bd4dcd5171b234be15e3f31ec9f622da \
+    --hash=sha256:71cd24a2b3eb335cb800c7159f423df1bd4dcd5171b234be15e3f31ec9f622da
     # via -r main.in
-py==1.8.0 \
-    --hash=sha256:64f65755aee5b381cea27766a3a147c3f15b9b6b9ac88676de66ba2ae36793fa \
-    --hash=sha256:dc639b046a6e2cff5bbe40194ad65936d6ba360b52b3c3fe1d08a82dd50b5e53 \
+py==1.10.0 \
+    --hash=sha256:21b81bda15b66ef5e1a777a21c4dcd9c20ad3efd0b3f817e7a809035269e1bd3 \
+    --hash=sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a
     # via pytest
 pycodestyle==2.5.0 \
     --hash=sha256:95a2219d12372f05704562a14ec30bc76b05a5b297b21a5dfe3f6fac3491ae56 \
-    --hash=sha256:e40a936c9a450ad81df37f549d676d127b1b66000a6c500caa2b085bc0ca976c \
+    --hash=sha256:e40a936c9a450ad81df37f549d676d127b1b66000a6c500caa2b085bc0ca976c
     # via flake8
 pycparser==2.19 \
-    --hash=sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3 \
+    --hash=sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3
     # via cffi
 pydantic==1.3 \
     --hash=sha256:176885123dfdd8f7ab6e7ba1b66d4197de75ba830bb44d921af88b3d977b8aa5 \
@@ -193,29 +195,29 @@ pydantic==1.3 \
     --hash=sha256:d03df07b7611004140b0fef91548878c2b5f48c520a8cb76d11d20e9887a495e \
     --hash=sha256:d4bb6a75abc2f04f6993124f1ed4221724c9dc3bd9df5cb54132e0b68775d375 \
     --hash=sha256:dacb79144bb3fdb57cf9435e1bd16c35586bc44256215cfaa33bf21565d926ae \
-    --hash=sha256:dd9359db7644317898816f6142f378aa48848dcc5cf14a481236235fde11a148 \
+    --hash=sha256:dd9359db7644317898816f6142f378aa48848dcc5cf14a481236235fde11a148
     # via -r main.in
 pyflakes==2.1.1 \
     --hash=sha256:17dbeb2e3f4d772725c777fabc446d5634d1038f234e77343108ce445ea69ce0 \
-    --hash=sha256:d976835886f8c5b31d47970ed689944a0262b5f3afa00a5a7b4dc81e5449f8a2 \
+    --hash=sha256:d976835886f8c5b31d47970ed689944a0262b5f3afa00a5a7b4dc81e5449f8a2
     # via flake8
 pymysql==0.9.2 \
     --hash=sha256:95f057328357e0e13a30e67857a8c694878b0175797a9a203ee7adbfb9b1ec5f \
-    --hash=sha256:9ec760cbb251c158c19d6c88c17ca00a8632bac713890e465b2be01fdc30713f \
+    --hash=sha256:9ec760cbb251c158c19d6c88c17ca00a8632bac713890e465b2be01fdc30713f
     # via aiomysql
 pyparsing==2.4.6 \
     --hash=sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f \
-    --hash=sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec \
+    --hash=sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec
     # via packaging
 pypika==0.37.1 \
-    --hash=sha256:e2939312e3c209dd388281f973e7470b6969fdb332c85d4bf5b98923879b2d5f \
+    --hash=sha256:e2939312e3c209dd388281f973e7470b6969fdb332c85d4bf5b98923879b2d5f
     # via tortoise-orm
 pytest==5.3.2 \
     --hash=sha256:6b571215b5a790f9b41f19f3531c53a45cf6bb8ef2988bc1ff9afb38270b25fa \
-    --hash=sha256:e41d489ff43948babd0fad7ad5e49b8735d5d55e26628a58673c39ff61d95de4 \
+    --hash=sha256:e41d489ff43948babd0fad7ad5e49b8735d5d55e26628a58673c39ff61d95de4
     # via -r test.in
 python-json-logger==0.1.11 \
-    --hash=sha256:b7a31162f2a01965a5efb94453ce69230ed208468b0bbc7fdfc56e6d8df2e281 \
+    --hash=sha256:b7a31162f2a01965a5efb94453ce69230ed208468b0bbc7fdfc56e6d8df2e281
     # via -r main.in
 python-rapidjson==0.9.1 \
     --hash=sha256:0e129f8c5a098aa7d066fe7ca3a99411010bf3ca1dc17525d4869c77e2dd4351 \
@@ -246,31 +248,39 @@ python-rapidjson==0.9.1 \
     --hash=sha256:c86d6b499603ece6c487cb45d757f7ee1cc8f8a5dc9e1a5548ce54cd763ffe48 \
     --hash=sha256:dab0d99456537e180da9f311aff70712a165c6c362dc4da5fd766ab53869bb64 \
     --hash=sha256:f81061d34e1510ab284e0c447e7b68dc6f3989260f57d84b3f335e10433692ca \
-    --hash=sha256:fc43e5376d8a1243c82e27397011bf03297e94242d45fad2f7b7b1561bf29615 \
+    --hash=sha256:fc43e5376d8a1243c82e27397011bf03297e94242d45fad2f7b7b1561bf29615
     # via -r main.in
 redis==3.3.11 \
     --hash=sha256:3613daad9ce5951e426f460deddd5caf469e08a3af633e9578fc77d362becf62 \
-    --hash=sha256:8d0fc278d3f5e1249967cba2eb4a5632d19e45ce5c09442b8422d15ee2c22cc2 \
-    # via -r main.in, fakeredis
+    --hash=sha256:8d0fc278d3f5e1249967cba2eb4a5632d19e45ce5c09442b8422d15ee2c22cc2
+    # via
+    #   -r main.in
+    #   fakeredis
 sentry-sdk==0.13.5 \
     --hash=sha256:05285942901d38c7ce2498aba50d8e87b361fc603281a5902dda98f3f8c5e145 \
-    --hash=sha256:c6b919623e488134a728f16326c6f0bcdab7e3f59e7f4c472a90eea4d6d8fe82 \
+    --hash=sha256:c6b919623e488134a728f16326c6f0bcdab7e3f59e7f4c472a90eea4d6d8fe82
     # via -r main.in
 six==1.13.0 \
     --hash=sha256:1f1b7d42e254082a9db6279deae68afb421ceba6158efa6131de7b3003ee93fd \
-    --hash=sha256:30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66 \
-    # via argon2-cffi, cryptography, fakeredis, packaging, pip-tools, structlog
+    --hash=sha256:30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66
+    # via
+    #   argon2-cffi
+    #   cryptography
+    #   fakeredis
+    #   packaging
+    #   pip-tools
+    #   structlog
 sortedcontainers==2.1.0 \
     --hash=sha256:974e9a32f56b17c1bac2aebd9dcf197f3eb9cd30553c5852a3187ad162e1a03a \
-    --hash=sha256:d9e96492dd51fae31e60837736b38fe42a187b5404c16606ff7ee7cd582d4c60 \
+    --hash=sha256:d9e96492dd51fae31e60837736b38fe42a187b5404c16606ff7ee7cd582d4c60
     # via fakeredis
 squema==0.0.1 \
     --hash=sha256:580db466d634766d38a00dfcd17fecf53556eb686be2219e3bcea404bdd3d07e \
-    --hash=sha256:79347276c818746dbf3961930e6641f5d5fa4f2c0b835eb0fdd5dbb3a0dc5414 \
+    --hash=sha256:79347276c818746dbf3961930e6641f5d5fa4f2c0b835eb0fdd5dbb3a0dc5414
     # via -r main.in
 structlog==19.2.0 \
     --hash=sha256:4287058cf4ce1a59bc5dea290d6386d37f29a37529c9a51cdf7387e51710152b \
-    --hash=sha256:6640e6690fc31d5949bc614c1a630464d3aaa625284aeb7c6e486c3010d73e12 \
+    --hash=sha256:6640e6690fc31d5949bc614c1a630464d3aaa625284aeb7c6e486c3010d73e12
     # via -r main.in
 tornado==6.0.3 \
     --hash=sha256:349884248c36801afa19e342a77cc4458caca694b0eda633f5878e458a44cb2c \
@@ -279,10 +289,10 @@ tornado==6.0.3 \
     --hash=sha256:559bce3d31484b665259f50cd94c5c28b961b09315ccd838f284687245f416e5 \
     --hash=sha256:abbe53a39734ef4aba061fca54e30c6b4639d3e1f59653f0da37a0003de148c7 \
     --hash=sha256:c845db36ba616912074c5b1ee897f8e0124df269468f25e4fe21fe72f6edd7a9 \
-    --hash=sha256:c9399267c926a4e7c418baa5cbe91c7d1cf362d505a1ef898fde44a07c9dd8a5 \
+    --hash=sha256:c9399267c926a4e7c418baa5cbe91c7d1cf362d505a1ef898fde44a07c9dd8a5
     # via -r main.in
 tortoise-orm==0.15.23 \
-    --hash=sha256:e100b97cec26c47d8267b750a2d84e5fa607d39cf8812b2c687bfa72ea9f28ee \
+    --hash=sha256:e100b97cec26c47d8267b750a2d84e5fa607d39cf8812b2c687bfa72ea9f28ee
     # via -r main.in
 typed-ast==1.4.0 \
     --hash=sha256:1170afa46a3799e18b4c977777ce137bb53c7485379d9706af8a59f2ea1aa161 \
@@ -304,18 +314,20 @@ typed-ast==1.4.0 \
     --hash=sha256:d7c45933b1bdfaf9f36c579671fec15d25b06c8398f113dab64c18ed1adda01d \
     --hash=sha256:d896919306dd0aa22d0132f62a1b78d11aaf4c9fc5b3410d3c666b818191630a \
     --hash=sha256:fdc1c9bbf79510b76408840e009ed65958feba92a88833cdceecff93ae8fff66 \
-    --hash=sha256:ffde2fbfad571af120fcbfbbc61c72469e72f550d676c3342492a9dfdefb8f12 \
+    --hash=sha256:ffde2fbfad571af120fcbfbbc61c72469e72f550d676c3342492a9dfdefb8f12
     # via mypy
 typing-extensions==3.7.4.1 \
     --hash=sha256:091ecc894d5e908ac75209f10d5b4f118fbdb2eb1ede6a63544054bb1edb41f2 \
     --hash=sha256:910f4656f54de5993ad9304959ce9bb903f90aadc7c67a0bef07e678014e892d \
-    --hash=sha256:cf8b63fedea4d89bab840ecbb93e75578af28f76f66c35889bd7065f5af88575 \
-    # via mypy, tortoise-orm
+    --hash=sha256:cf8b63fedea4d89bab840ecbb93e75578af28f76f66c35889bd7065f5af88575
+    # via
+    #   mypy
+    #   tortoise-orm
 urllib3==1.25.7 \
     --hash=sha256:a8a318824cc77d1fd4b2bec2ded92646630d7fe8619497b142c84a9e6f5a7293 \
-    --hash=sha256:f3c5fd51747d450d4dcf6f923c81f78f811aab8205fda64b0aba34a4e48b0745 \
+    --hash=sha256:f3c5fd51747d450d4dcf6f923c81f78f811aab8205fda64b0aba34a4e48b0745
     # via sentry-sdk
 wcwidth==0.1.7 \
     --hash=sha256:3df37372226d6e63e1b1e1eda15c594bca98a22d33a23832a90998faa96bc65e \
-    --hash=sha256:f4ebe71925af7b40a864553f761ed559b43544f8f71746c2d756c7fe788ade7c \
+    --hash=sha256:f4ebe71925af7b40a864553f761ed559b43544f8f71746c2d756c7fe788ade7c
     # via pytest
